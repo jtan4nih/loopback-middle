@@ -1,0 +1,40 @@
+{
+  "name": "stem2",
+  "version": "1.0.0",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node .",
+    "test": "jasmine-node spec"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "compression": "^1.0.3",
+    "cors": "^2.5.2",
+    "helmet": "^0.14.0",
+    "jwt-simple": "^0.5.0",
+    "loopback": "^2.22.0",
+    "loopback-boot": "^2.6.5",
+    "loopback-component-explorer": "^2.1.0",
+    "loopback-connector-mongodb": "^1.13.3",
+    "loopback-connector-mysql": "^2.2.1",
+    "loopback-connector-rethinkdbdash": "0.0.7",
+    "loopback-datasource-juggler": "^2.39.0",
+    "moment": "^2.12.0",
+    "node-fetch": "^1.5.3",
+    "options": "0.0.6",
+    "request": "^2.69.0",
+    "serve-favicon": "^2.0.1"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5",
+    "jshint": "^2.5.6",
+    "nodemon": "^1.9.1",
+    "nsp": "^2.1.0",
+    "swagger-client": "^2.1.15"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "description": "stem2"
+}
