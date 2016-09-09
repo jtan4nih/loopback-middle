@@ -1,0 +1,76 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db",
+    "public": false
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Achievements": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Goals": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Messages": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Points": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Powerups": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Threads": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Flags": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Users": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Quests": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Usersthreads": {
+    "dataSource": "stem2local",
+    "public": true
+  }
+}

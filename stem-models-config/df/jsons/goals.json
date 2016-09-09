@@ -1,0 +1,47 @@
+{
+  "resource": [
+    {
+      "name": “goals”,
+      "label": “Goals”,
+      "plural": "Goals",
+      "alias": null,
+      "field": [
+        {
+          "name": "id",
+          "label": "Id",
+          "type": "pk"
+        },
+        {
+          "name": "subject",
+          "label": "Type",
+          "type": "string",
+          "size": 80,
+          "allow_null": false
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "string",
+          "size": 2000,
+          "allow_null": true
+        },
+        {
+          "name": "owner",
+          "label": "Owner",
+          "type": "reference",
+          "ref_table": "users",
+          "ref_fields": "id"
+        }
+      ],
+      "related": [
+        {
+          "name": "owner_by_userid",
+          "type": "belongs_to",
+          "ref_table": "users",
+          "ref_field": "id",
+          "field": "owner"
+        }
+      ]
+    }
+  ]
+}

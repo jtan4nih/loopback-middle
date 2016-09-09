@@ -1,0 +1,8 @@
+{
+  "error": {
+    "name": "Error",
+    "status": 500,
+    "message": "must be logged in",
+    "stack": "Error: must be logged in\n    at C:\\Users\\tanj3\\stem2-middle\\common\\models\\messages.js:16:14\n    at Function.<anonymous> (C:\\Users\\tanj3\\stem2-middle\\node_modules\\loopback\\lib\\model.js:196:11)\n    at execStack (C:\\Users\\tanj3\\stem2-middle\\node_modules\\strong-remoting\\lib\\remote-objects.js:480:26)\n    at RemoteObjects.execHooks (C:\\Users\\tanj3\\stem2-middle\\node_modules\\strong-remoting\\lib\\remote-objects.js:492:10)\n    at phaseBeforeInvoke (C:\\Users\\tanj3\\stem2-middle\\node_modules\\strong-remoting\\lib\\remote-objects.js:641:10)\n    at runHandler (C:\\Users\\tanj3\\stem2-middle\\node_modules\\loopback-phase\\lib\\phase.js:130:5)\n    at iterate (C:\\Users\\tanj3\\stem2-middle\\node_modules\\async\\lib\\async.js:146:13)\n    at Object.async.eachSeries (C:\\Users\\tanj3\\stem2-middle\\node_modules\\async\\lib\\async.js:162:9)\n    at runHandlers (C:\\Users\\tanj3\\stem2-middle\\node_modules\\loopback-phase\\lib\\phase.js:139:13)\n    at iterate (C:\\Users\\tanj3\\stem2-middle\\node_modules\\async\\lib\\async.js:146:13)"
+  }
+}

@@ -1,0 +1,400 @@
+swagger: '2.0'
+info:
+  title: REST API
+  description: STEMPOWERMENT PHASE 2
+  version: '1.0'
+produces:
+  - application/json
+basePath: /api
+paths:
+  /users:
+    get:
+      x-swagger-router-controller: PowerUps
+      operationId: getUsers
+      tags:
+        - /stem2
+      description: Returns the all users.
+      responses:
+        '200':
+          description: Successful request.
+          schema:
+            $ref: '#/definitions/Users'
+        default:
+          description: Invalid request.
+          schema:
+            $ref: '#/definitions/Error'
+  /powerUps:
+    get:
+      x-swagger-router-controller: PowerUps
+      operationId: getPowerUps
+      tags:
+        - /stem2
+      description: Returns the all powerUps.
+      responses:
+        '200':
+          description: Successful request.
+          schema:
+            $ref: '#/definitions/PowerUps'
+        default:
+          description: Invalid request.
+          schema:
+            $ref: '#/definitions/Error'
+  /achievements:
+    get:
+      x-swagger-router-controller: Achievements
+      operationId: getAchievements
+      tags:
+        - /stem2
+      description: Returns the all achievements.
+      responses:
+        '200':
+          description: Successful request.
+          schema:
+            $ref: '#/definitions/Achievements'
+        default:
+          description: Invalid request.
+          schema:
+            $ref: '#/definitions/Error'
+  /leaderboard:
+    get:
+      x-swagger-router-controller: Leaderboard
+      operationId: getLeaderboard
+      tags:
+        - /stem2
+      description: Returns the leaderboard.
+      responses:
+        '200':
+          description: Successful request.
+          schema:
+            $ref: '#/definitions/Leaderboard'
+        default:
+          description: Invalid request.
+          schema:
+            $ref: '#/definitions/Error'
+  /threads:
+    get:
+      x-swagger-router-controller: Threads
+      operationId: getThreads
+      tags:
+        - /stem2
+      description: Returns all the Threads.
+      responses:
+        '200':
+          description: Successful request.
+          schema:
+            $ref: '#/definitions/Threads'
+        default:
+          description: Invalid request.
+          schema:
+            $ref: '#/definitions/Error'
+  /weather:
+    get:
+      x-swagger-router-controller: Weather
+      operationId: getWeather
+      tags:
+        - /test
+      description: Returns the current weather for the requested location using the requested unit.
+      parameters:
+        - name: location
+          in: query
+          description: The MSN Weather location search string.
+          required: true
+          type: string
+        - name: unit
+          in: query
+          description: "The unit, either 'C' or 'F'."
+          required: true
+          type: string
+          enum:
+            - C
+            - F
+          default: F
+      responses:
+        '200':
+          description: Successful request.
+          schema:
+            $ref: '#/definitions/Weather'
+        default:
+          description: Invalid request.
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Users:
+    properties:
+      firstName:
+        type: string
+      middleName:
+        type: string
+      lastName:
+        type: string
+      interests:
+        type: string
+      transplantDate:
+        type: string
+        format: date
+      startDate:
+        type: string
+        format: date
+      avatar:
+        type: string
+      powerups:
+        $ref: '#/definitions/PowerUps'
+      points:
+        $ref: '#/definitions/Points'
+      achievements:
+        $ref: '#/definitions/Achievements'
+      state:
+        type: boolean
+    required:
+      - firstName
+      - lastName
+      - powerups
+      - startDate
+  Points:
+    properties:
+      upVotes:
+        type: string
+        description: e.g. Likes
+      powerUpsCompletion:
+        type: string
+      topicStarted:
+        type: string
+      commentsAdded:
+        type: string
+  Achievements:
+    properties:
+      type:
+        type: string
+      description:
+        type: string
+      images:
+        type: string
+        description: There is always one image per state (of achievement)
+      title:
+        type: string
+        format: date
+      threshold:
+        type: number
+        description: Unlocked state will be decided by this value
+      states:
+        enum:
+          - Hidden
+          - Locked
+          - Unlocked
+        description: Only one state will be active at any time per user/achievement
+  PowerUps:
+    properties:
+      title:
+        type: string
+      what:
+        type: string
+        description: “What to Do” - a brief instruction () describing how to complete the Power Up
+      how:
+        type: string
+        description: “How it Helps” - a corresponding explanation of how the Power Up may be beneficial to the user
+      action:
+        type: string
+        description: a Control that permits the user to indicate completion of the Power Up
+      category:
+        type: string
+        enum:
+          - Hydration
+          - Medication
+          - Exercise
+      subcategory:
+        type: string
+        enum:
+          - Brainstorm
+          - Store Knowledge
+          - Think About It
+          - Compete
+          - Stay Active
+          - Protective Benefits
+          - Share Success
+          - Work with Others
+          - Take on a Challenge
+      state:
+        type: string
+        enum:
+          - Completed
+          - Incomplete
+        description: per user
+      relativeDay:
+        type: number
+        description: It is relative to the start date; per user; e.g. 1, 2 and 3 for day 1
+    required:
+      - title
+      - action
+      - category
+  Leaderboard:
+    properties:
+      who:
+        $ref: '#/definitions/Users'
+      points:
+        type: number
+      unlocks:
+        type: boolean
+        description: Any of the Users.Achievement.State
+  Messages:
+    properties:
+      subject:
+        type: string
+      text:
+        type: string
+      createdAt:
+        type: string
+        format: date
+      updatedAt:
+        type: string
+        format: date
+      state:
+        type: string
+        enum:
+          - Private
+          - Public
+      owner:
+        $ref: '#/definitions/Users'
+      type:
+        type: string
+        enum:
+          - Mine
+          - Public
+  Threads:
+    properties:
+      messages:
+        $ref: '#/definitions/Messages'
+  Flags:
+    properties:
+      type:
+        enum:
+          - Like
+          - Objectionable
+      owner:
+        $ref: '#/definitions/Users'
+      message:
+        $ref: '#/definitions/Messages'
+      description:
+        type: string
+        description: Each flag is per user per message
+      state:
+        type: string
+        enum:
+          - On
+          - Off
+  CurrentWeather:
+    properties:
+      temperature:
+        type: string
+      skycode:
+        type: string
+      skytext:
+        type: string
+      date:
+        type: string
+      observationtime:
+        type: string
+      observationpoint:
+        type: string
+      feelslike:
+        type: string
+      humidity:
+        type: string
+      winddisplay:
+        type: string
+      day:
+        type: string
+      shortday:
+        type: string
+      windspeed:
+        type: string
+      imageUrl:
+        type: string
+    required:
+      - temperature
+      - skycode
+      - skytext
+      - date
+      - observationtime
+      - observationpoint
+      - feelslike
+      - humidity
+      - winddisplay
+      - day
+      - shortday
+      - windspeed
+      - imageUrl
+  Error:
+    properties:
+      message:
+        type: string
+    required:
+      - message
+  Forecast:
+    properties:
+      low:
+        type: string
+      high:
+        type: string
+      skycodeday:
+        type: string
+      skytextday:
+        type: string
+      date:
+        type: string
+      day:
+        type: string
+      shortday:
+        type: string
+      precip:
+        type: string
+    required:
+      - low
+      - high
+      - skycodeday
+      - skytextday
+      - date
+      - day
+      - shortday
+      - precip
+  Location:
+    type: object
+    properties:
+      name:
+        type: string
+      zipcode:
+        type: string
+      lat:
+        type: string
+      long:
+        type: string
+      timezone:
+        type: string
+      alert:
+        type: string
+      degreetype:
+        type: string
+        enum:
+          - C
+          - F
+      imagerelativeurl:
+        type: string
+    required:
+      - name
+      - lat
+      - long
+      - timezone
+      - degreetype
+  Weather:
+    properties:
+      location:
+        $ref: '#/definitions/Location'
+      current:
+        $ref: '#/definitions/CurrentWeather'
+      forecast:
+        type: array
+        items:
+          $ref: '#/definitions/Forecast'
+    required:
+      - current
+      - location
+      - forecast

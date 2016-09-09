@@ -1,0 +1,70 @@
+{
+  "resource": [
+    {
+      "name": "achievements",
+      "label": "Achievements",
+      "plural": "Achievements",
+      "alias": null,
+      "field": [
+        {
+          "name": "id",
+          "label": "Id",
+          "type": "pk"
+        },
+        {
+          "name": "type",
+          "label": "Type",
+          "type": "string",
+          "size": 80,
+          "allow_null": false
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "string",
+          "size": 80,
+          "allow_null": true
+        },
+        {
+          "name": "image",
+          "label": "Image",
+          "type": "string",
+          "default": "image.png",
+          "size": 80,
+          "allow_null": false
+        },
+        {
+          "name": "title",
+          "label": "Title",
+          "type": "string",
+          "size": 80,
+          "allow_null": false
+        },
+        {
+          "name": "threshold",
+          "label": "Threshold",
+          "type": "integer",
+          "default": 0,
+          "allow_null": false
+        },
+        {
+          "name": "state",
+          "label": "State",
+          "type": "string",
+          "size": 80,
+          "default": "Locked",
+          "allow_null": false
+        }
+      ],
+      "related": [
+        {
+          "name": "achievements_by_userid",
+          "type": "belongs_to",
+          "ref_table": "users",
+          "ref_field": "id",
+          "field": "id"
+        }
+      ]
+    }
+  ]
+}

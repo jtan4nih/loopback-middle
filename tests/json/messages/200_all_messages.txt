@@ -1,0 +1,3 @@
+{
+  "status": "{flag: 'ok', userId: 'undefined', token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoidXNlciIsImV4cCI6MTQ2NzcxNTA3MDI5N30.kcfOUkwTnuSRhV7Jsl0PAAt8ZqGwZeslJ9tuCOQFtRM'}"
+}

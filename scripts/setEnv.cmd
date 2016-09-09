@@ -1,0 +1,1 @@
+set PATH=C:\Bitnami\dreamfactory-2.2.0-0\mysql\bin;%PATH%

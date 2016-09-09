@@ -1,0 +1,10 @@
+{
+  "id": 4,
+  "subject": "string",
+  "text": "string",
+  "createdat": "2016-04-06T00:00:00.000Z",
+  "updatedat": "2016-04-06T00:00:00.000Z",
+  "state": "string",
+  "type": "string",
+  "owner": 0
+}
