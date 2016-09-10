@@ -59,6 +59,22 @@
       },
       "_selectable": true
     },
+    "how": {
+      "type": "String",
+      "required": true,
+      "length": 2000,
+      "precision": null,
+      "scale": null,
+      "mysql": {
+        "columnName": "how",
+        "dataType": "varchar",
+        "dataLength": 2000,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "N"
+      },
+      "_selectable": false
+    },
     "threshold": {
       "type": "Number",
       "required": true,
@@ -110,10 +126,9 @@
   },
   "validations": [],
   "relations": {
-    "powerups": {
-      "type": "hasAndBelongsToMany",
-      "model": "Powerups",
-      "foreignKey": ""
+    "powerupsRel": {
+      "type": "hasMany",
+      "model": "Powerups"
     }
   },
   "acls": [],

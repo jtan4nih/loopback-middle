@@ -37,6 +37,10 @@
     "dataSource": "stem2local",
     "public": true
   },
+  "Flags": {
+    "dataSource": "stem2local",
+    "public": true
+  },
   "Goals": {
     "dataSource": "stem2local",
     "public": true
@@ -53,11 +57,11 @@
     "dataSource": "stem2local",
     "public": true
   },
-  "Threads": {
+  "Quests": {
     "dataSource": "stem2local",
     "public": true
   },
-  "Flags": {
+  "Threads": {
     "dataSource": "stem2local",
     "public": true
   },
@@ -65,11 +69,15 @@
     "dataSource": "stem2local",
     "public": true
   },
-  "Quests": {
+  "Usersthreads": {
     "dataSource": "stem2local",
     "public": true
   },
-  "Usersthreads": {
+  "Questspowerups": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Usersquests": {
     "dataSource": "stem2local",
     "public": true
   }

@@ -10,6 +10,9 @@ module.exports = function(app) {
 	var Powerups = app.models.Powerups;
 	var Threads = app.models.Threads;
 	var Flags = app.models.Flags;
+	var Questspowerups = app.models.Questspowerups;
+	var Usersquests = app.models.Usersquests;	//TypeError: params.through.belongsTo is not a function
+	// var Usersachievements = app.models.Usersachievements;
 
 	// Powerups.belongsTo(Quests, {foreignKey: 'questsId', as: 'quests'});
 	// Quests.hasMany(Powerups, {foreignKey: 'questsId', as: 'powerups'});
@@ -18,8 +21,8 @@ module.exports = function(app) {
 	// Users.hasAndBelongsToMany(Quests);
 	// Quests.hasAndBelongsToMany(Users);
 
-	Users.nestRemoting('quests');
-	Quests.nestRemoting('powerups');
+	Users.nestRemoting('questsRel');
+	Quests.nestRemoting('powerupsRel');
 
 	if(process.env.inmemory === 'true') {
 		var db = app.dataSources.db;
@@ -33,6 +36,9 @@ module.exports = function(app) {
 		Powerups.attachTo(db);
 		Threads.attachTo(db);
 		Flags.attachTo(db);
+		Questspowerups.attachTo(db);
+		Usersquests.attachTo(db);
+		// Usersachievements.attachTo(db);
 
 		console.log('In-memory persistence only!');
 	}

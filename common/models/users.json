@@ -159,17 +159,17 @@
   },
   "validations": [],
   "relations": {
-    "quests": {
-      "type": "hasAndBelongsToMany",
+    "questsRel": {
+      "type": "hasMany",
       "model": "Quests",
       "relations": {
-        "powerups": {
+        "powerupsRel": {
           "type": "hasAndBelongsToMany",
           "model": "Powerups"
         }
       }
     },
-    "achievements": {
+    "achievementsRel": {
       "type": "hasAndBelongsToMany",
       "model": "Achievements"
     }
