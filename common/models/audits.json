@@ -1,0 +1,42 @@
+{
+  "name": "Audits",
+  "base": "PersistedModel",
+  "strict": false,
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Apps": {
+      "type": "string"
+    },
+    "Asset": {
+      "type": "string"
+    },
+    "Component": {
+      "type": "string"
+    },
+    "Extra": {
+      "type": "string"
+    },
+    "Field": {
+      "type": "string"
+    },
+    "Name": {
+      "type": "string"
+    },
+    "Object": {
+      "type": "string"
+    },
+    "Package": {
+      "type": "string"
+    },
+    "Services": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

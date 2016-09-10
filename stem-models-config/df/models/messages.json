@@ -1,0 +1,91 @@
+{
+  "resource": [
+    {
+      "name": "messages",
+      "label": "Messages",
+      "plural": "Messages",
+      "alias": null,
+      "field": [
+        {
+          "name": "id",
+          "label": "Id",
+          "type": "pk"
+        },
+        {
+          "name": "subject",
+          "label": "Subject",
+          "type": "string",
+          "size": 2000,
+          "allow_null": false
+        },
+        {
+          "name": "text",
+          "label": "Text",
+          "type": "string",
+          "size": 2000,
+          "allow_null": true
+        },
+        {
+          "name": "createdAt",
+          "label": "Created At",
+          "type": "timestamp_on_create",
+          "allow_null": true
+        },
+        {
+          "name": "updatedAt",
+          "label": "Updated At",
+          "type": "timestamp_on_update",
+          "allow_null": true
+        },
+        {
+          "name": "liked",
+          "label": "Liked",
+          "type": "string",
+          "size": 80,
+          "default": "Public",
+          "allow_null": true
+        },
+        {
+          "name": "state",
+          "label": "State",
+          "type": "string",
+          "size": 80,
+          "default": "Public",
+          "allow_null": false
+        },
+        {
+          "name": "type",
+          "label": "Type",
+          "type": "string",
+          "default": "Topic",
+          "size": 80,
+          "allow_null": false
+        },
+        {
+          "name": "owner",
+          "label": "Owner",
+          "type": "reference",
+    	    "ref_table": "users",
+    	    "ref_field": "id",
+          "allow_null": false
+        },
+        {
+          "name": "likecount",
+          "label": "Like Count",
+          "type": "integer",
+          "default": "0",
+          "size": 80,
+          "allow_null": false
+        }        
+      ],
+      "related": [
+        {
+          "name": "owner_by_userid",
+          "ref_table": "users",
+          "ref_field": "id",
+          "field": "owner"
+        }
+      ]
+    }
+  ]
+}

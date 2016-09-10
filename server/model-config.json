@@ -80,5 +80,9 @@
   "Usersquests": {
     "dataSource": "stem2local",
     "public": true
+  },
+  "Audits": {
+    "dataSource": "stem2local",
+    "public": true
   }
 }
