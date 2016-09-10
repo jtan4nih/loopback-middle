@@ -15,12 +15,10 @@ GET /Usersthreads
 			"id": 0,
 			"subject": "Message from " + fromwhoName + " to " + towhoName,
 			"text": text,
-			"createdat": "2016-04-05",
-			"updatedat": "2016-04-05",
 			"liked": "false",
 			"state": "Private",
-			"type": "NA",
-			"owner": 0,
+			"type": "Private Message",
+			"owner": fromwhoId,
 			"likecount": 0
         };
     	Messages.create(json1, function(err, data) {
