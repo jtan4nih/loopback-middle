@@ -31,6 +31,19 @@ var app = module.exports = {
         }
 
         return ret;
-    }
+    },
+    getToken: function(tokenHeader) {
+        var bearer = "Bearer ";
+        var token = tokenHeader;
+        if(typeof tokenHeader !== 'undefined' && tokenHeader.indexOf(bearer) > -1) {
+            // console.log('1.1');
+            var begin = tokenHeader.indexOf(bearer) + bearer.length;
+            // console.log('1.2 begin ' + begin);
+            token = tokenHeader.substr(begin, tokenHeader.length);
+            // console.log('1.3 Messages token received [' + token + ']');
+        }
+        // console.log('2 Messages token received [' + token + ']');
+        return token;
+  }
 
 };
