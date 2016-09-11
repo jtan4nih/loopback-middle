@@ -56,7 +56,7 @@ module.exports = function(app) {
               // throw err;
               console.log('Quests models unchanged. \n', quests);
             } else {
-              console.log('Quests models created: \n', quests);
+              // console.log('Quests models created: \n', quests);
             }
           });
 

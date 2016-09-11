@@ -45,7 +45,7 @@ module.exports = function(app) {
           // throw err;
           console.log('Powerups models unchanged. \n', powerups);
         } else {
-          console.log('Powerups models created: \n', powerups);
+          // console.log('Powerups models created: \n', powerups);
         }
       });
 

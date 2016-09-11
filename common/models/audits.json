@@ -33,6 +33,9 @@
     },
     "Services": {
       "type": "string"
+    },
+    "owner": {
+      "type": "number"
     }
   },
   "validations": [],

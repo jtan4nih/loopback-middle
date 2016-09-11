@@ -38,7 +38,7 @@ module.exports = function(app) {
               // throw err;
               console.log('QuestsPowerups models unchanged. \n', quests);
             } else {
-              console.log('QuestsPowerups models created: \n', quests);
+              // console.log('QuestsPowerups models created: \n', quests);
             }
           });
 
