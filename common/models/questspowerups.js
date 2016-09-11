@@ -1,19 +1,21 @@
+var stemjwt = require('../../server/jwt');
+
 module.exports = function(Questspowerups) {
 
-  // Questspowerups.beforeRemote('**', function(context, unused, next) {
-  //   console.log('Questspowerups calls intercepted!');
-  //   var req = context.req;
-  //   var res = context.res;
-  //   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'] || req.headers['Authorization'];
-  //   console.log('questspowerups.js token received [' + token + ']');
-  //   var stat = stemjwt.isTokenValid(token);
-  //   console.log(stat);
-  //   if(stat) {
-  //     next();
-  //   } else {
-  //     next(new Error('must be logged in'));
-  //   }
-  // });
+  Questspowerups.beforeRemote('**', function(context, unused, next) {
+    console.log('Questspowerups calls intercepted!');
+    var req = context.req;
+    var res = context.res;
+    var tokenHeader = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'] || req.headers['Authorization'] || req.headers['authorization'];
+    var token = stemjwt.getToken(tokenHeader);
+    var stat = stemjwt.isTokenValid(token);
+    console.log(stat);
+    if(stat) {
+      next();
+    } else {
+      next(new Error('must be logged in'));
+    }
+  });
 
   Questspowerups.afterRemote('find', function(context, questspowerups, next) {
     console.log('Questspowerups find call intercepted!');

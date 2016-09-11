@@ -7,8 +7,8 @@ module.exports = function(Powerups) {
     console.log('Powerups calls intercepted!');
     var req = context.req;
     var res = context.res;
-    var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'] || req.headers['Authorization'];
-    console.log('powerups.js token received [' + token + ']');
+    var tokenHeader = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'] || req.headers['Authorization'] || req.headers['authorization'];
+    var token = stemjwt.getToken(tokenHeader);
     var stat = stemjwt.isTokenValid(token);
     console.log(stat);
     if(stat) {

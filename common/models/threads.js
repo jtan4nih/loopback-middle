@@ -1,3 +1,4 @@
+var stemjwt = require('../../server/jwt');
 // var services = require('../../server/services');
 var capi = require('../../server/api-helper');
 

@@ -1,3 +1,5 @@
+var stemjwt = require('../../server/jwt');
+
 module.exports = function(Usersthreads) {
 
 /**
