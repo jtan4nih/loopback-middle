@@ -7,22 +7,15 @@ module.exports = function(Users) {
 
     Users.isAuthenticated = function(userId, password, cb) {
 var json1 = {
-  "Apps": "string",
-  "Asset": "string",
-  "Component": "string",
-  "Extra": "attempted logged in event",
-  "Field": "string",
-  "Name": "string",
-  "Object": "users",
-  "Package": "string",
-  "Services": "isAuthenticated",
+  "extra": "attempted logged in event",
+  "services": "isAuthenticated",
   "owner": userId,
   "id": 0
 };
 var Audits = Users.app.models.Audits;
 Audits.create(json1, function(err, data) {
 
-console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> users.isAuthenticated userId [' + userId + '] logged in! data = ' + data);
+console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> users.isAuthenticated userId [' + userId + '] logged in! data = ' + data + " err = " + err);
       	//console.log('Users Users.isAuthenticated: userId [' + userId + '] password [' + password + ']');	//WARNING: Comment this out in production!!!
         var auth = false;
         var done = function(auth, user) {

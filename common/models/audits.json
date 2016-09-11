@@ -7,35 +7,29 @@
     "validateUpsert": true
   },
   "properties": {
-    "Apps": {
+    "subject": {
       "type": "string"
     },
-    "Asset": {
+    "description": {
       "type": "string"
     },
-    "Component": {
+    "object": {
       "type": "string"
     },
-    "Extra": {
+    "service": {
       "type": "string"
     },
-    "Field": {
-      "type": "string"
-    },
-    "Name": {
-      "type": "string"
-    },
-    "Object": {
-      "type": "string"
-    },
-    "Package": {
-      "type": "string"
-    },
-    "Services": {
+    "extra": {
       "type": "string"
     },
     "owner": {
-      "type": "number"
+      "type": "string"
+    },
+    "createdat": {
+      "type": "Date"
+    },
+    "updatedat": {
+      "type": "Date"
     }
   },
   "validations": [],

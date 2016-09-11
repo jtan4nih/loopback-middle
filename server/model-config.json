@@ -83,8 +83,6 @@
   },
   "Audits": {
     "dataSource": "stem2local",
-    "public": true,
-    "$promise": {},
-    "$resolved": true
+    "public": true
   }
 }
