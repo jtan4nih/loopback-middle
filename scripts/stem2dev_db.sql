@@ -52,7 +52,7 @@ CREATE TABLE `audits` (
   `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `flags` (
   KEY `fk_flags_messages` (`messages`),
   CONSTRAINT `fk_flags_messages` FOREIGN KEY (`messages`) REFERENCES `messages` (`id`),
   CONSTRAINT `fk_flags_owner` FOREIGN KEY (`owner`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +116,7 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`),
   KEY `fk_messages_owner` (`owner`),
   CONSTRAINT `fk_messages_owner` FOREIGN KEY (`owner`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +207,7 @@ CREATE TABLE `threads` (
   PRIMARY KEY (`id`),
   KEY `fk_threads_messages` (`messages`),
   CONSTRAINT `fk_threads_messages` FOREIGN KEY (`messages`) REFERENCES `messages` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,11 +263,15 @@ DROP TABLE IF EXISTS `usersquests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usersquests` (
-  `id` int(11) NOT NULL,
-  `usersId` int(11) DEFAULT NULL,
-  `questsId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usersId` int(11) NOT NULL,
+  `questsId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_usersquests_usersId` (`usersId`),
+  KEY `fk_usersquests_questsId` (`questsId`),
+  CONSTRAINT `fk_usersquests_questsId` FOREIGN KEY (`questsId`) REFERENCES `quests` (`id`),
+  CONSTRAINT `fk_usersquests_usersId` FOREIGN KEY (`usersId`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -289,7 +293,7 @@ CREATE TABLE `usersthreads` (
   CONSTRAINT `fk_usersthreads_threads` FOREIGN KEY (`threads`) REFERENCES `threads` (`id`),
   CONSTRAINT `fk_usersthreads_usersId1` FOREIGN KEY (`usersId1`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_usersthreads_usersId2` FOREIGN KEY (`usersId2`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -301,4 +305,4 @@ CREATE TABLE `usersthreads` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-12 15:55:53
+-- Dump completed on 2016-09-13  7:00:30

@@ -9,9 +9,9 @@ module.exports = function(app) {
 // return
 
         app.dataSources.stem2local.automigrate([
-          'Usersquests'
-          , 
-          'Quests'
+          // 'Usersquests'
+          // , 
+          // 'Quests'
           // , 
           // 'Usersachievements'
           ], function(err) {
