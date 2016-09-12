@@ -31,7 +31,12 @@ module.exports = function(app) {
               {
                 "id": 4,
                 "questsid": 3,
-                "powerupsid": 1
+                "powerupsid": 10
+              },
+              {
+                "id": 5,
+                "questsid": 4,
+                "powerupsid": 20
               }
           ], function(err, quests) {
             if (err) {

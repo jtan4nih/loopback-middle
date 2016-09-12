@@ -7,7 +7,7 @@ module.exports = function(Users) {
 
     Users.isAuthenticated = function(userId, password, cb) {
 var json1 = {
-  "extra": "attempted logged in event",
+  "extra": "Login attempt",
   "services": "isAuthenticated",
   "owner": userId,
   "id": 0
