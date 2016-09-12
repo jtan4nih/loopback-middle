@@ -6,6 +6,10 @@
   "options": {
     "validateUpsert": true
   },
+  "mysql": {
+    "schema": "stem2dev_db",
+    "table": "audits"
+  },
   "properties": {
     "subject": {
       "type": "string"
