@@ -1,6 +1,6 @@
 module.exports = function(Usersquests) {
 
-    Usersquests.view = function(userId, cb) {
+    Usersquests.quests = function(userId, cb) {
 		var Quests = Usersquests.app.models.Quests;
 		Usersquests.find(function(err, arr) {
             if (err) return cb(err);
@@ -26,7 +26,7 @@ module.exports = function(Usersquests) {
 	};
 
     Usersquests.remoteMethod(
-        'view',
+        'quests',
         {
           http: {path:'/view', verb:'get'},
           accepts: [{arg: 'userId', type: 'string'}],

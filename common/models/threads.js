@@ -27,6 +27,95 @@ function predicatBy(prop, desc) {
 
 module.exports = function(Threads) {
 
+    function saveLike(userId, messageId, ownerId, ownerName, data) {
+        //TODO the owner type need to be updated!
+        // var messageId = that.item.id;
+        // var ownerId;
+        // try {
+        //     ownerId = localStorage.getItem(stemcfg.userid); //data[0].id;
+        // } catch(e) {
+            console.log(data);
+        //     throw e;
+        // }
+        var json3 = {
+            data: {
+                "subject": "Like by " + ownerName,
+                "description": "favourite of a message",
+                "messages": messageId,
+                "owner": ownerId
+            }
+        };
+        // debugger
+        var oldFlag;
+        function updateUserFlags(data) {
+            data.obj = data;  //support fetch
+            // var ownerName = StemService.getUserName(stemcfg);
+            oldFlag = component.getFlagByMessageIdAndOwner(data.obj, that.item.id, ownerName);  //TODO for now, only the first one!
+            if(typeof oldFlag !== 'undefined' && typeof oldFlag.id !== 'undefined') {
+                if(json3.data.messages == oldFlag.messages) {
+                    json3.data = oldFlag;
+                }
+                else {
+                    json3.data.id = 0;
+                    //=== musy be a new flag!
+                }
+            } else {
+                json3.data.id = 0;
+                //=== musy be a new flag!
+            }
+            json3.data.state = !json3.data.state;
+            json3 = json3.data;  //support fetch
+
+            function updateLikeUI(data) {
+                // var scope = StemFactory.get('wallCtrl');
+                var oldFlag;
+                function updateMessageLikeCount(data) {
+                    var json4 = { data: '' };
+                    var currentFlag = json3.state;  //support http fetch
+                    var oldMessage = data;  //support http fetch
+                    oldMessage.liked = currentFlag?"true":"false";
+                    json4.data = oldMessage;
+                    if(currentFlag) {
+                        json4.data.likecount = json4.data.likecount + 1;
+                    } else {
+                        json4.data.likecount = json4.data.likecount - 1;
+                    }
+                    json4 = json4.data;  //support fetch
+                    function updateItem(data) {
+                        // var scope = StemFactory.get('wallCtrl');
+                        // scope.$apply(function () {
+                            //copy all values into data and update only the like count
+                            var temp = data.likecount;
+                            data = component.items[itemIndex];
+                            data.likecount = temp;
+                            if(currentFlag) {
+                                data.loggedinuserliked = 1;
+                            } else {
+                                data.loggedinuserliked = 0;
+                            }
+                            component.items.splice(itemIndex, 1, data);  //support fetch
+                            // $ionicLoading.hide();
+                        // });
+                    }
+                    capi(webHost, '/api/Messages', 'PUT', 'model', 'method', json4, updateItem, null);
+                }
+                capi(webHost, `/api/Messages/${messageId}`, 'GET', 'model', 'method', {"id": messageId}, updateMessageLikeCount, null);
+            }
+            capi(webHost, '/api/Flags', 'PUT', 'model', 'method', json3, updateLikeUI, null);
+        } //updateFlags end
+        // capi(webHost, '/api/Flags', 'GET', 'model', 'method', json3, updateUserFlags, null, 'swagger');
+        capi(webHost, '/api/Flags', 'GET', 'model', 'method', json3, updateUserFlags, null);
+    }; //saveIt end
+
+    Threads.remoteMethod(
+        'saveLike',
+        {
+          http: {path:'/saveLike', verb:'post'},
+          accepts: [{arg: 'userId', type: 'string'}, {arg: 'messageId', type: 'string'}, {arg: 'ownerId', type: 'string'}, {arg: 'ownerName', type: 'string'}],
+          returns: {arg: 'status', type: 'string'}
+        }
+    );
+
     //TODO begin the following have to be refactored into a common codes!!!
     function getOwnerName(subject) {
     	var ret = subject;
