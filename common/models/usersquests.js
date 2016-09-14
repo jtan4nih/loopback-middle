@@ -28,7 +28,7 @@ module.exports = function(Usersquests) {
     Usersquests.remoteMethod(
         'quests',
         {
-          http: {path:'/view', verb:'get'},
+          http: {path:'/quests', verb:'get'},
           accepts: [{arg: 'userId', type: 'string'}],
           returns: {arg: 'quests', type: 'string'}
         }
