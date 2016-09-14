@@ -23,20 +23,45 @@ function predicatBy(prop, desc) {
 		return 0;
 	}
 }
+function getFlagByMessageIdAndOwner(data, msgId, ownerId) {
+    var ret;
+    // debugger
+    console.log("13 =====================> component.getFlagByMessageId: searching in data [");
+    // console.log(data);
+    console.log(']  by msgId [' + msgId + '] ownerId [' + ownerId + ']');
+    var f1, f2;
+    for(var i=0; i<data.length; i++) {  //TODO why is data.length is null here????
+        if(data[i].messages == msgId) f1 = true;
+        if(data[i].subject.indexOf(ownerId) > -1) f2 = true;  //TODO this has to be owner's id!
+        // debugger
+        if(f1 && f2) {
+            ret = data[i];
+            console.log("component.getFlagByMessageIdAndOwner() found: ret.messages [" + ret.messages + ']');
+            break;
+        }
+        f1 = f2 = false;
+    }
+    console.log("component.getFlagByMessageIdAndOwner(): ret [" + ret + ']');
+    return ret;
+}
+
 //TODO the following needs to be in a common place!!!
 
 module.exports = function(Threads) {
 
-    function saveLike(userId, messageId, ownerId, ownerName, data) {
+    Threads.saveLike = function(userId, messageId, ownerId, ownerName, itemIndex, cb) {
+        var Flags = Threads.app.models.Flags;
+        console.log(`threads.js saveLike() entered ${userId} ${messageId} ${ownerId} ${ownerName} ${itemIndex}`);
         //TODO the owner type need to be updated!
         // var messageId = that.item.id;
         // var ownerId;
         // try {
         //     ownerId = localStorage.getItem(stemcfg.userid); //data[0].id;
         // } catch(e) {
-            console.log(data);
+            // console.log(data);
         //     throw e;
         // }
+        var items = [];
         var json3 = {
             data: {
                 "subject": "Like by " + ownerName,
@@ -49,8 +74,8 @@ module.exports = function(Threads) {
         var oldFlag;
         function updateUserFlags(data) {
             data.obj = data;  //support fetch
-            // var ownerName = StemService.getUserName(stemcfg);
-            oldFlag = component.getFlagByMessageIdAndOwner(data.obj, that.item.id, ownerName);  //TODO for now, only the first one!
+            // oldFlag = getFlagByMessageIdAndOwner(data.obj, that.item.id, ownerName);  //TODO for now, only the first one!
+            oldFlag = getFlagByMessageIdAndOwner(data, messageId, ownerName);  //TODO for now, only the first one!
             if(typeof oldFlag !== 'undefined' && typeof oldFlag.id !== 'undefined') {
                 if(json3.data.messages == oldFlag.messages) {
                     json3.data = oldFlag;
@@ -64,86 +89,154 @@ module.exports = function(Threads) {
                 //=== musy be a new flag!
             }
             json3.data.state = !json3.data.state;
-            json3 = json3.data;  //support fetch
 
             function updateLikeUI(data) {
                 // var scope = StemFactory.get('wallCtrl');
                 var oldFlag;
                 function updateMessageLikeCount(data) {
                     var json4 = { data: '' };
+                    json4.data = {};
                     var currentFlag = json3.state;  //support http fetch
-                    var oldMessage = data;  //support http fetch
-                    oldMessage.liked = currentFlag?"true":"false";
-                    json4.data = oldMessage;
-                    if(currentFlag) {
-                        json4.data.likecount = json4.data.likecount + 1;
-                    } else {
-                        json4.data.likecount = json4.data.likecount - 1;
-                    }
-                    json4 = json4.data;  //support fetch
+                    console.log(data);
+                    if(typeof data !== 'undefined' && data !== null) {
+                        var oldMessage = data;  //support http fetch
+                        oldMessage.liked = currentFlag?"true":"false";
+                        json4.data = oldMessage;
+                        if(currentFlag) {
+                            json4.data.likecount = json4.data.likecount + 1;
+                        } else {
+                            json4.data.likecount = json4.data.likecount - 1;
+                        }
+                    } 
                     function updateItem(data) {
                         // var scope = StemFactory.get('wallCtrl');
                         // scope.$apply(function () {
                             //copy all values into data and update only the like count
-                            var temp = data.likecount;
-                            data = component.items[itemIndex];
-                            data.likecount = temp;
-                            if(currentFlag) {
-                                data.loggedinuserliked = 1;
-                            } else {
-                                data.loggedinuserliked = 0;
-                            }
-                            component.items.splice(itemIndex, 1, data);  //support fetch
+                            // if(typeof data !== 'undefined') {
+                                // var temp = data.likecount;
+                                // data = items[itemIndex];
+                                // data.likecount = temp;
+                                // if(currentFlag) {
+                                //     data.loggedinuserliked = 1;
+                                // } else {
+                                //     data.loggedinuserliked = 0;
+                                // }
+                                // items.splice(itemIndex, 1, data);  //support fetch
+                                cb(null, data);
+                            // } else {
+                            //     cb(null, {});
+                            // }
                             // $ionicLoading.hide();
                         // });
                     }
-                    capi(webHost, '/api/Messages', 'PUT', 'model', 'method', json4, updateItem, null);
+
+                    // capi(webHost, '/api/Messages', 'PUT', 'model', 'method', json4, updateItem, null);
+                    setMessage(json4.data, updateItem);
                 }
-                capi(webHost, `/api/Messages/${messageId}`, 'GET', 'model', 'method', {"id": messageId}, updateMessageLikeCount, null);
+                // capi(webHost, `/api/Messages/${messageId}`, 'GET', 'model', 'method', {"id": messageId}, updateMessageLikeCount, null);
+                getMessage(messageId, updateMessageLikeCount);
             }
-            capi(webHost, '/api/Flags', 'PUT', 'model', 'method', json3, updateLikeUI, null);
+            // capi(webHost, '/api/Flags', 'PUT', 'model', 'method', json3, updateLikeUI, null);
+            setMessageFlag(json3.data, updateLikeUI);
         } //updateFlags end
         // capi(webHost, '/api/Flags', 'GET', 'model', 'method', json3, updateUserFlags, null, 'swagger');
-        capi(webHost, '/api/Flags', 'GET', 'model', 'method', json3, updateUserFlags, null);
+        // capi(webHost, '/api/Flags', 'GET', 'model', 'method', json3, updateUserFlags, null);
+        getMessageFlag(messageId, ownerId, updateUserFlags);
     }; //saveIt end
 
     Threads.remoteMethod(
         'saveLike',
         {
           http: {path:'/saveLike', verb:'post'},
-          accepts: [{arg: 'userId', type: 'string'}, {arg: 'messageId', type: 'string'}, {arg: 'ownerId', type: 'string'}, {arg: 'ownerName', type: 'string'}],
+          accepts: [{arg: 'userId', type: 'string'}, {arg: 'messageId', type: 'string'}, {arg: 'ownerId', type: 'string'}, {arg: 'ownerName', type: 'string'}, {arg: 'itemIndex', type: 'number'}],
           returns: {arg: 'status', type: 'string'}
         }
     );
 
     //TODO begin the following have to be refactored into a common codes!!!
-    function getOwnerName(subject) {
-    	var ret = subject;
-    	if(typeof subject !== 'undefined') {
-    		var marker1 = 'Message by ';
-	    	var begin = subject.indexOf(marker1);
-	    	var end = subject.length;
-	    	ret = subject.substring(begin + marker1.length, end);
-    	}
-    	console.log('getOwnerName = ' + ret);
-    	return ret;
+    function setMessage(json, handleFlag) {
+        var ret = false;
+        var Messages = Threads.app.models.Messages;
+        Messages.upsert(json, function (err, data2) {
+            console.log('threads.js setMessage: json [');
+            // console.log(json);
+            console.log('] length = ');
+            console.log(json && json.length);
+            console.log('] data2 [');
+            // console.log(data2);
+            console.log('] length = ');
+            console.log(data2 && data2.length);
+            // if(data2.length == 1) { //assume only one match
+            //     if(data2[0].state != 0) {
+            //         ret = true;
+            //     }
+            // }
+            // console.log('setMessage = ' + data2);
+            handleFlag(data2);
+        }); //Flags.find end
     }
-    //not used!
+    function getMessage(messageid, handleFlag) {
+        console.log(`threads.js getMessage: messageid ${messageid}`);
+        var ret = false;
+        var Messages = Threads.app.models.Messages;
+        Messages.findById({id: messageid}, function (err, data2) {
+            console.log('threads.js getMessage: data2 [');
+            // console.log(data2);
+            console.log('] length = ');
+            console.log(data2 && data2.length);
+            // if(data2.length == 1) { //assume only one match
+            //     if(data2[0].state != 0) {
+            //         ret = true;
+            //     }
+            // }
+            // console.log('getMessage = ' + data2);
+            handleFlag(data2);
+        }); //Flags.find end
+    }
+    function setMessageFlag(json, handleFlag) {
+        var ret = false;
+        var Flags = Threads.app.models.Flags;
+        Flags.upsert(json, function (err, data2) {
+            console.log('threads.js setMessageFlag: data2 [');
+            // console.log(data2);
+            console.log('] length = ');
+            console.log(data2 && data2.length);
+            if(typeof data2 !== 'undefined' && data2.length == 1) { //assume only one match
+                if(data2[0].state != 0) {
+                    ret = true;
+                }
+            }
+            // console.log('setMessageFlag = ' + ret);
+            handleFlag(ret);
+        }); //Flags.upsert end
+    }
     function getMessageFlag(messageid, loggedinownerid, handleFlag) {
     	var ret = false;
         var Flags = Threads.app.models.Flags;
 		Flags.find({"messages": messageid, "owner": loggedinownerid}, function (err, data2) {
 			console.log('threads.js getMessageFlag: data2 [');
-			console.log(data2);
-			console.log(']');
-			if(data2.length == 1) { //assume only one match
+			// console.log(data2);
+			console.log('] length = ');
+            console.log(data2 && data2.length);
+			if(typeof data2 !== 'undefined' && data2.length == 1) { //assume only one match
 				if(data2[0].state != 0) {
 					ret = true;
 				}
 			}
-	    	console.log('getMessageFlag = ' + ret);
+	    	// console.log('getMessageFlag = ' + ret);
 			handleFlag(ret);
 		});	//Flags.find end
+    }
+    function getOwnerName(subject) {
+        var ret = subject;
+        if(typeof subject !== 'undefined') {
+            var marker1 = 'Message by ';
+            var begin = subject.indexOf(marker1);
+            var end = subject.length;
+            ret = subject.substring(begin + marker1.length, end);
+        }
+        console.log('getOwnerName = ' + ret);
+        return ret;
     }
     //TODO end the following have to be refactored into a common codes!!!
 
