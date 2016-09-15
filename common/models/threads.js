@@ -23,35 +23,35 @@ function predicatBy(prop, desc) {
 		return 0;
 	}
 }
-function getFlagByMessageIdAndOwner(data, msgId, ownerId) {
-    var ret;
-    // debugger
-    console.log("13 =====================> component.getFlagByMessageId: searching in data [");
-    // console.log(data);
-    console.log(']  by msgId [' + msgId + '] ownerId [' + ownerId + ']');
-    var f1, f2;
-    for(var i=0; i<data.length; i++) {  //TODO why is data.length is null here????
-        if(data[i].messages == msgId) f1 = true;
-        if(data[i].subject.indexOf(ownerId) > -1) f2 = true;  //TODO this has to be owner's id!
-        // debugger
-        if(f1 && f2) {
-            ret = data[i];
-            console.log("component.getFlagByMessageIdAndOwner() found: ret.messages [" + ret.messages + ']');
-            break;
-        }
-        f1 = f2 = false;
-    }
-    console.log("component.getFlagByMessageIdAndOwner(): ret [" + ret + ']');
-    return ret;
-}
+// function getFlagByMessageIdAndOwner(data, msgId, ownerId) {
+//     var ret;
+//     // debugger
+//     console.log("13 =====================> component.getFlagByMessageId: searching in data [");
+//     // console.log(data);
+//     console.log(']  by msgId [' + msgId + '] ownerId [' + ownerId + ']');
+//     var f1, f2;
+//     for(var i=0; i<data.length; i++) {  //TODO why is data.length is null here????
+//         if(data[i].messages == msgId) f1 = true;
+//         if(data[i].subject.indexOf(ownerId) > -1) f2 = true;  //TODO this has to be owner's id!
+//         // debugger
+//         if(f1 && f2) {
+//             ret = data[i];
+//             console.log("component.getFlagByMessageIdAndOwner() found: ret.messages [" + ret.messages + ']');
+//             break;
+//         }
+//         f1 = f2 = false;
+//     }
+//     console.log("component.getFlagByMessageIdAndOwner(): ret [" + ret + ']');
+//     return ret;
+// }
 
 //TODO the following needs to be in a common place!!!
 
 module.exports = function(Threads) {
 
-    Threads.saveLike = function(userId, messageId, ownerId, ownerName, itemIndex, cb) {
+    Threads.saveLike = function(messageId, ownerId, ownerName, cb) {
         var Flags = Threads.app.models.Flags;
-        console.log(`threads.js saveLike() entered ${userId} ${messageId} ${ownerId} ${ownerName} ${itemIndex}`);
+        console.log(`threads.js saveLike() entered ${messageId} ${ownerId} ${ownerName}`);
         //TODO the owner type need to be updated!
         // var messageId = that.item.id;
         // var ownerId;
@@ -73,10 +73,12 @@ module.exports = function(Threads) {
         // debugger
         var oldFlag;
         function updateUserFlags(data) {
-            data.obj = data;  //support fetch
-            // oldFlag = getFlagByMessageIdAndOwner(data.obj, that.item.id, ownerName);  //TODO for now, only the first one!
-            oldFlag = getFlagByMessageIdAndOwner(data, messageId, ownerName);  //TODO for now, only the first one!
-            if(typeof oldFlag !== 'undefined' && typeof oldFlag.id !== 'undefined') {
+            console.log('threads.js updateUserFlags: old flags data [');
+            console.log(data);
+            console.log(']');
+            // data.obj = data;  //support fetch
+            oldFlag = data;  //getFlagByMessageIdAndOwner(data, messageId, ownerName);  //TODO for now, only the first one!
+            if(typeof oldFlag !== 'undefined' && oldFlag !== null && typeof oldFlag.id !== 'undefined') {
                 if(json3.data.messages == oldFlag.messages) {
                     json3.data = oldFlag;
                 }
@@ -89,6 +91,7 @@ module.exports = function(Threads) {
                 //=== musy be a new flag!
             }
             json3.data.state = !json3.data.state;
+            console.log(`threads.js json3.data.state: ${json3.data.state}`);
 
             function updateLikeUI(data) {
                 // var scope = StemFactory.get('wallCtrl');
@@ -96,18 +99,28 @@ module.exports = function(Threads) {
                 function updateMessageLikeCount(data) {
                     var json4 = { data: '' };
                     json4.data = {};
-                    var currentFlag = json3.state;  //support http fetch
+                    console.log('threads.js updateMessageLikeCount: json3 [');
+                    console.log(json3);
+                    console.log(']');
+                    var currentFlag = json3.data.state;
+                    console.log('threads.js updateMessageLikeCount: old messages data [');
                     console.log(data);
+                    console.log('] currentFlag [');
+                    console.log(currentFlag);
+                    console.log(']');
                     if(typeof data !== 'undefined' && data !== null) {
                         var oldMessage = data;  //support http fetch
+                        console.log(`threads.js before oldMessage.liked: ${oldMessage.liked}`);
                         oldMessage.liked = currentFlag?"true":"false";
+                        console.log(`threads.js after oldMessage.liked: ${oldMessage.liked}`);
                         json4.data = oldMessage;
                         if(currentFlag) {
                             json4.data.likecount = json4.data.likecount + 1;
                         } else {
                             json4.data.likecount = json4.data.likecount - 1;
                         }
-                    } 
+                    }
+                    console.log(`threads.js new json4.data.likecount: ${json4.data.likecount}`);
                     function updateItem(data) {
                         // var scope = StemFactory.get('wallCtrl');
                         // scope.$apply(function () {
@@ -144,11 +157,12 @@ module.exports = function(Threads) {
         getMessageFlag(messageId, ownerId, updateUserFlags);
     }; //saveIt end
 
+    // accepts: [{arg: 'userId', type: 'string'}, {arg: 'messageId', type: 'string'}, {arg: 'ownerId', type: 'string'}, {arg: 'ownerName', type: 'string'}, {arg: 'itemIndex', type: 'number'}],
     Threads.remoteMethod(
         'saveLike',
         {
           http: {path:'/saveLike', verb:'post'},
-          accepts: [{arg: 'userId', type: 'string'}, {arg: 'messageId', type: 'string'}, {arg: 'ownerId', type: 'string'}, {arg: 'ownerName', type: 'string'}, {arg: 'itemIndex', type: 'number'}],
+          accepts: [{arg: 'messageId', type: 'string'}, {arg: 'ownerId', type: 'string'}, {arg: 'ownerName', type: 'string'}],
           returns: {arg: 'status', type: 'string'}
         }
     );
@@ -159,73 +173,47 @@ module.exports = function(Threads) {
         var Messages = Threads.app.models.Messages;
         Messages.upsert(json, function (err, data2) {
             console.log('threads.js setMessage: json [');
-            // console.log(json);
+            console.log(json);
             console.log('] length = ');
-            console.log(json && json.length);
+            console.log(json);
             console.log('] data2 [');
-            // console.log(data2);
-            console.log('] length = ');
-            console.log(data2 && data2.length);
-            // if(data2.length == 1) { //assume only one match
-            //     if(data2[0].state != 0) {
-            //         ret = true;
-            //     }
-            // }
-            // console.log('setMessage = ' + data2);
+            console.log(data2);
+            console.log(']');
             handleFlag(data2);
-        }); //Flags.find end
+        }); //Messages.upsert end
     }
     function getMessage(messageid, handleFlag) {
         console.log(`threads.js getMessage: messageid ${messageid}`);
         var ret = false;
         var Messages = Threads.app.models.Messages;
-        Messages.findById({id: messageid}, function (err, data2) {
+        Messages.findById(messageid, function (err, data2) {
             console.log('threads.js getMessage: data2 [');
-            // console.log(data2);
-            console.log('] length = ');
-            console.log(data2 && data2.length);
-            // if(data2.length == 1) { //assume only one match
-            //     if(data2[0].state != 0) {
-            //         ret = true;
-            //     }
-            // }
-            // console.log('getMessage = ' + data2);
+            console.log(data2);
+            console.log(']');
             handleFlag(data2);
-        }); //Flags.find end
+        }); //Messages.findById end
     }
     function setMessageFlag(json, handleFlag) {
         var ret = false;
         var Flags = Threads.app.models.Flags;
         Flags.upsert(json, function (err, data2) {
             console.log('threads.js setMessageFlag: data2 [');
-            // console.log(data2);
-            console.log('] length = ');
-            console.log(data2 && data2.length);
-            if(typeof data2 !== 'undefined' && data2.length == 1) { //assume only one match
-                if(data2[0].state != 0) {
-                    ret = true;
-                }
-            }
-            // console.log('setMessageFlag = ' + ret);
-            handleFlag(ret);
+            console.log(data2);
+            console.log(']');
+            handleFlag(data2);
         }); //Flags.upsert end
     }
     function getMessageFlag(messageid, loggedinownerid, handleFlag) {
+        console.log(`threads.js getMessageFlag: messageid ${messageid}`);
     	var ret = false;
         var Flags = Threads.app.models.Flags;
-		Flags.find({"messages": messageid, "owner": loggedinownerid}, function (err, data2) {
+		Flags.findOne({where: {"messages": messageid, "owner": loggedinownerid}}, function (err, data2) {
 			console.log('threads.js getMessageFlag: data2 [');
-			// console.log(data2);
-			console.log('] length = ');
-            console.log(data2 && data2.length);
-			if(typeof data2 !== 'undefined' && data2.length == 1) { //assume only one match
-				if(data2[0].state != 0) {
-					ret = true;
-				}
-			}
-	    	// console.log('getMessageFlag = ' + ret);
-			handleFlag(ret);
-		});	//Flags.find end
+			console.log(data2);
+			console.log(']');
+	    	console.log('getMessageFlag = ' + data2);
+			handleFlag(data2);
+		});	//Flags.findOne end
     }
     function getOwnerName(subject) {
         var ret = subject;
