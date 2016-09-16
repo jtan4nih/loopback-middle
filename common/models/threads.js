@@ -197,7 +197,9 @@ module.exports = function(Threads) {
         var ret = false;
         var Flags = Threads.app.models.Flags;
         Flags.upsert(json, function (err, data2) {
-            console.log('threads.js setMessageFlag: data2 [');
+            console.log(`=================> threads.js setMessageFlag: data2 ${json.state} [`);
+//=== TODO piggy back the results of flags onto messages but it is not there???? :(
+// data2.flagState = json.state;
             console.log(data2);
             console.log(']');
             handleFlag(data2);
