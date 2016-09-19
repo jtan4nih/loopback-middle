@@ -1,0 +1,1 @@
+set NODE_PATH=.&& set PORT=3043&& set usershost=http://localhost&& set inmemory=&&node node_modules\nodemon\bin\nodemon.js server\server.js
