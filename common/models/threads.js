@@ -263,7 +263,7 @@ var data3 = [];
 						// console.log(item1);
 						// console.log(']');
 						data3.push(item1);	//create a thread for each message ---- THIS happens before ****** 1 ****** !!!!!!
-
+                        // data3.reverse(); //TODO this is a start but it shouldn't messed up the comments!
 					}
 				}
 			}
