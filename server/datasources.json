@@ -1,0 +1,17 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "stem2local": {
+    "host": "localhost",
+    "port": 3306,
+    "database": "stem2dev_db",
+    "password": "admin",
+    "name": "stem2local",
+    "debug": false,
+    "user": "root",
+    "connector": "mysql",
+    "disabled": true
+  }
+}
