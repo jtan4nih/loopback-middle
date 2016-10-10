@@ -1,6 +1,9 @@
 {
   "name": "stem2",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.7.0"
+  },
   "main": "server/server.js",
   "scripts": {
     "start": "node .",
