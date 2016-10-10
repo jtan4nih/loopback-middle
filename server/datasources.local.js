@@ -14,6 +14,7 @@ module.exports = {
   stem2local: {
     host: dburl,
     port: 3306,
+    connectionLimit: 10,
     database: dbname,
     debug: false,
     user: dbuser,
