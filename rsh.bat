@@ -1,0 +1,1 @@
+heroku stop DYNO && heroku restart
