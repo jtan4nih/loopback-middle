@@ -16,15 +16,16 @@ var app = module.exports = loopback();
 app.start = function() {
 
 var server;
-if(process.env.PORT == 3000) {
+app.set('port', process.env.PORT || 3000);
+// if(process.env.PORT == 3000) {
     server = app.listen(app.get('port'), function () {
         console.log('LoopBack Server listening on port ' + 3000);
     });
-} else {
-    server = https.createServer(options, app).listen(3043, function () {
-        console.log('LoopBack Server listening on secured port ' + 3043);
-    });
-}
+// } else {
+//     server = https.createServer(options, app).listen(3043, function () {
+//         console.log('LoopBack Server listening on secured port ' + 3043);
+//     });
+// }
 return  server;
 
   // start the web server
