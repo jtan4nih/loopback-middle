@@ -3,11 +3,24 @@ var fetch = fetch || {}; //avoid error on NodeJS
 // We will pass these to the wrapper function at the end of the file
 (function(isNode, isAngular, fetch) {
 
-function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode, jwt) {
+function isRemote(host) {
+    // debugger
+    var ret = false;
+    if(host.indexOf('localhost') === -1 && host.indexOf('127.0.0.1') === -1) {
+        ret = true;
+    }
+    // console.log("isRemote ret " + ret);
+    return ret;
+}
+
+function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode, jwt, localStorage1) {
         // console.log("doneFunc:");
         // console.log(doneFunc);
-        console.log(">>>>>>>>>>>>>> calling " + uri + " with an HTTP " + action + " ...");
+        // debugger
+        // console.log(">>>>>>>>>>>>>> calling " + uri + " with an HTTP " + action + " ...");
         if(typeof mode === 'undefined' || mode.trim() === '' || mode === null) {
+// console.log("*** http fetch mode ***");
+console.log("api-helper.js: HTTP fetch " + action + " request: " + base_url + uri);
             var payload;
             var temp = '';
             if(action === 'POST' || action === 'PUT') payload = JSON.stringify(jsonData);
@@ -16,9 +29,13 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
             function json(response) {  
                 return response.json()  
             }
-            
+
             function handleErrors(response) {
                 // debugger
+                if(typeof response.id === "number") {
+                    //must be ok - nothing is done!
+                    if(cb != null) cb(response); else doneFunc();
+                } else
                 //=== c.f. https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
                 if (typeof response.name === 'undefined' && typeof response.text !== 'undefined' && !response.ok) {
                     if(typeof response.text() !== 'undefined') {
@@ -35,11 +52,11 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
                     // throw Error(response.statusText);
                 } else 
                 if(typeof response.error !== 'undefined') {
-                    console.log('HTTP fetch request failed', response.error.message);
+                    // console.log('HTTP fetch request failed', response.error.message);
                     if(cb != null) cb(response.error.message); else doneFunc();
                 } else {
                     //=== ALL GOOD!!! :)
-                    console.log('HTTP fetch request succeeded with JSON response', response);
+                    // console.log('HTTP fetch request succeeded with JSON response', response);
                     if(cb != null) cb(response); else doneFunc();
                 }
                 return response;
@@ -55,7 +72,8 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
 
             var finalHeader = {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + (localStorage1 && localStorage1.getItem('stem2token')) || (localStorage && localStorage.getItem('stem2token'))
             };
             if(typeof jwt !== 'undefined') {
               finalHeader = {
@@ -64,6 +82,7 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
                 'authorization': 'Bearer ' + jwt
               };
             } 
+
             fetch(base_url + uri, {
               method: action,
               // mode: 'no-cors',
@@ -73,15 +92,16 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
             .then(json)
             .then(handleErrors)
             .then(function(response) {
-                console.log("ok");
+                // console.log("ok");
             }).catch(function(error) {
                 // debugger
-                console.log('HTTP fetch request exception', error);
+                // console.log('HTTP fetch request exception', error);
                 if(cb != null) cb(error); else doneFunc();
 
                 console.log(error);
             });
         } else {
+// console.log("*** swagger-client mode ***");
             if(uri === '/api/Flags' && action === 'GET') {
                 var swagger = new Swagger({
                     url: base_url + '/explorer/swagger.json',
@@ -170,6 +190,7 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
             else
             if(uri === '/api/Messages' && action === 'PUT') {
                 // debugger
+if(!isRemote(base_url)) {
                 var swagger = new Swagger({
                     url: base_url + '/explorer/swagger.json',
                     success: function() {
@@ -184,8 +205,23 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
                         }); //end of swagger.Messages.Messages_upsert
                     } //end of success
                 }); //swagger end
-            }
-            else
+} else {
+                var swagger = new Swagger({
+                    url: base_url + '/explorer/swagger.json',
+                    success: function() {
+                        swagger.Messages.upsert__put_Messages(jsonData, {
+                            responseContentType: 'application/json'
+                        }, function(data) {
+                            // console.log("api-helper.js (swagger-client): Messages.Messages_upsert returned:");
+                            // console.log(data);
+                            // console.log("put message --------------------------->doneFunc:");
+                            // console.log(doneFunc);
+                            if(cb != null) cb(data); else doneFunc();
+                        }); //end of swagger.Messages.Messages_upsert
+                    } //end of success
+                }); //swagger end
+}
+            } else
             if(uri === '/api/Messages' && action === 'POST') {
                 // debugger
                 var swagger = new Swagger({
@@ -200,7 +236,10 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
                             // console.log(doneFunc);
                             if(cb != null) cb(data); else doneFunc();
                         }); //end of swagger.Messages.Messages_create
-                    } //end of success
+                    }, //end of success
+                    authorizations : {
+                       someHeaderAuth: new SwaggerClient.ApiKeyAuthorization('Authorization', "Bearer " + localStorage.getItem('stem2token'), 'header')
+                    }                    
                 }); //swagger end
             }
             else
@@ -229,8 +268,8 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
                         swagger.Threads.Threads_wall(jsonData, {
                             responseContentType: 'application/json'
                         }, function(data) {
-                            console.log("api-helper.js (swagger-client): Threads.Threads_wall returned:");
-                            console.log(data);
+                            // console.log("api-helper.js (swagger-client): Threads.Threads_wall returned:");
+                            // console.log(data);
                             // console.log("get flag --------------------------->doneFunc:");
                             // console.log(doneFunc);
                             if(cb != null) cb(data); else doneFunc();
@@ -246,10 +285,10 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
                         swagger.Users.Users_isAuthenticated(jsonData, {
                             responseContentType: 'application/json'
                         }, function(data) {
-                            console.log("api-helper.js (swagger-client): Users.Users_isAuthenticated returned:");
-                            console.log(data);
-                            console.log("get flag --------------------------->doneFunc:");
-                            console.log(doneFunc);
+                            // console.log("api-helper.js (swagger-client): Users.Users_isAuthenticated returned:");
+                            // console.log(data);
+                            // console.log("get flag --------------------------->doneFunc:");
+                            // console.log(doneFunc);
                             if(cb != null) cb(data); else doneFunc();
                         }); //end of swagger.Users.Users_isAuthenticated
                     } //end of success
@@ -291,7 +330,10 @@ var app = module.exports = {
 
     //=== high level convenient method
     api: function(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode, jwt) {
-        commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode, jwt);
+        var localStorage = {};
+        localStorage.getItem = function(key) {
+        }
+        commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode, jwt, localStorage);
     } //api end
 
 }; //api module.exports end
