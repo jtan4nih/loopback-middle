@@ -8,4 +8,7 @@ echo "**************************************************************************
 pause
 @echo on
 :nodist use stable
+rem first test the mock APIHOST, then the real APIHOST
 set quit=truefalse&& set APIHOST=http://127.0.0.1:3064&& npm test && set quit=false&& set APIHOST=&& npm test
+
+:set quit=false&& set APIHOST=&& npm test

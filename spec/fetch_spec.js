@@ -24,6 +24,8 @@ var app = require("../server/api-helper.js");
 var request = require("request");
 var console = require("util");
 var base_url = process.env.APIHOST || "http://127.0.0.1:3000";
+var jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1c2VyMUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImV4cCI6MTQ4NTEzMTM3MjMzN30.baGR8tXMsKTc2amqcuLt9x5DhPOPQJ_0LKE-uYCQgT0";
+var tokenStr = "";  //"?token="+jwtToken;
 
 // console.log("app ---> : " + JSON.stringify(app));
 process.on('uncaughtException',function(e) {
@@ -102,7 +104,7 @@ console.log(body);
             json4 = JSON.parse(json4Str);
 			console.log('in putCount !!!!!!!!!!!!!!!!!!!!!!!!! >>>>>>> done:');
 			console.log(done);
-			app.api(base_url, '/api/Messages', 'PUT', 'model', 'method', json4, callOnlyTwo, done);
+			app.api(base_url, '/api/Messages'+tokenStr, 'PUT', 'model', 'method', json4, callOnlyTwo, done, '', jwtToken);
             // app.api(base_url, '/api/Messages', 'PUT', 'model', 'method', json4, null, done);
     	}
     	function callOnlyTwo(data) {
@@ -111,7 +113,7 @@ console.log(body);
     	}
     	function api1(data, done) {
             done();
-			app.api(base_url, '/api/Flags', 'GET', 'model', 'method', {}, api2, done);
+			app.api(base_url, '/api/Flags'+tokenStr, 'GET', 'model', 'method', {}, api2, done, '', jwtToken);
     	}
     	function api2(data) {
     		var userName = 'Test User 1';
@@ -133,7 +135,7 @@ console.log(body);
             console.log('api2 json3:');
             console.log(json3);
 			// app.api(base_url, '/api/Flags', 'PUT', 'model', 'method', json3, null, done, 'swagger');
-            app.api(base_url, '/api/Flags', 'PUT', 'model', 'method', json3, null, done);
+            app.api(base_url, '/api/Flags'+tokenStr, 'PUT', 'model', 'method', json3, null, done, '', jwtToken);
             done();
             // process.exit();
     	}
@@ -143,7 +145,7 @@ console.log(body);
             // server.close();
             process.exit();
         }
-		app.api(base_url, '/api/Messages/count', 'GET', 'model', 'method', {}, putCount, done);
+		app.api(base_url, '/api/Messages/count'+tokenStr, 'GET', 'model', 'method', {}, putCount, done, '', jwtToken);
         // app.api(base_url, '/api/Messages/count', 'GET', 'model', 'method', {}, nothing, done);
     }, 20000);
 // return
@@ -156,7 +158,7 @@ console.log(body);
             done();
     	}
 		var messageId = currentTotalMessageCount;
-		app.api(base_url, '/api/Messages/id', 'GET', 'model', 'method', {id: messageId}, printCount, done);
+		app.api(base_url, '/api/Messages/id'+tokenStr, 'GET', 'model', 'method', {id: messageId}, printCount, done, '', jwtToken);
     }, 20000);
 
     it("User login test - should be ok", function(done) {
@@ -167,7 +169,7 @@ console.log(body);
             done();
         }
         var messageId = currentTotalMessageCount;
-        app.api(base_url, '/api/Users/login', 'POST', 'model', 'method', {userId: "user1@gmail.com", password: "111111"}, authenticated, done);
+        app.api(base_url, '/api/Users/login', 'POST', 'model', 'method', {userId: "user1@gmail.com", password: "111111"}, authenticated, done, '', jwtToken);
     }, 20000);
 // return
 
@@ -179,7 +181,7 @@ console.log(body);
             done();
         }
         var messageId = currentTotalMessageCount;
-        app.api(base_url, '/api/Threads/wall', 'GET', 'model', 'method', {}, wallLoaded, done);
+        app.api(base_url, '/api/Threads/wall'+tokenStr, 'GET', 'model', 'method', {}, wallLoaded, done, '', jwtToken);
     }, 20000);
 // return
 
@@ -209,13 +211,13 @@ console.log(body);
 			console.log(done);
             console.log('in putCount !!!!!!!!!!!!!!!!!!!!!!!!! >>>>>>> json4:');
             console.log(json4);
-			app.api(base_url, '/api/Messages', 'PUT', 'model', 'method', json4, launch, done);
+			app.api(base_url, '/api/Messages'+tokenStr, 'PUT', 'model', 'method', json4, launch, done, '', jwtToken);
     	}
     	function launch(data) {
             done();
     		startFlagTest(data, done);
     	}
-		app.api(base_url, '/api/Messages/count', 'GET', 'model', 'method', {}, putCount, done);
+		app.api(base_url, '/api/Messages/count'+tokenStr, 'GET', 'model', 'method', {}, putCount, done, '', jwtToken);
 		// getMessageCount(done, putCount);
     }, 20000);
 
@@ -281,14 +283,14 @@ console.log(body);
             }
             console.log("MessagesFindByIdDone():");
             console.log(oldMessage);
-            app.api(base_url, '/api/Messages', 'PUT', 'model', 'method', oldMessage, allDone, done);
+            app.api(base_url, '/api/Messages'+tokenStr, 'PUT', 'model', 'method', oldMessage, allDone, done, '', jwtToken);
         } //MessagesFindByIdDone end
         function flagsUpdateDone(data) {
             done();
             console.log("flagsUpdateDone():");
             console.log(data);
             var j = {"id": messageId};
-            app.api(base_url, '/api/Messages/findOne?filter=' + toExplorerFilter(j), 'GET', 'model', 'method', j, MessagesFindByIdDone, done);
+            app.api(base_url, '/api/Messages/findOne?filter=' + toExplorerFilter(j)+tokenStr, 'GET', 'model', 'method', j, MessagesFindByIdDone, done, '', jwtToken);
             // app.api(base_url, '/api/Messages/findOne?filter=' + toExplorerFilter(j), 'GET', 'model', 'method', j, null, done);
         }
 
@@ -314,9 +316,9 @@ console.log(body);
             // console.log('~~~~~~~~~~~~~~~~~~~~~~~~~ AFTER THE NEXT API CALL, IT SHOULD HANGED! THUS STOPPING HERE!!! :( ~~~~~~~~~~~~~~~~~~~~~~~~~')
             // nothing();
 	        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~ AFTER THE NEXT API CALL, IT SHOULD HANGED! ~~~~~~~~~~~~~~~~~~~~~~~~~')
-			app.api(base_url, '/api/Flags', 'PUT', 'model', 'method', json3, flagsUpdateDone, done);
+			app.api(base_url, '/api/Flags'+tokenStr, 'PUT', 'model', 'method', json3, flagsUpdateDone, done, '', jwtToken);
 		}
-		app.api(base_url, '/api/Flags', 'GET', 'model', 'method', json3, flagsFindDone, done);
+		app.api(base_url, '/api/Flags'+tokenStr, 'GET', 'model', 'method', json3, flagsFindDone, done, '', jwtToken);
 		// app.api(base_url, '/api/Flags', 'GET', 'model', 'method', json3, null, done);
 
     } //startFlagTest end

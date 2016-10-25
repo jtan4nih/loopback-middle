@@ -3,11 +3,11 @@ var fetch = fetch || {}; //avoid error on NodeJS
 // We will pass these to the wrapper function at the end of the file
 (function(isNode, isAngular, fetch) {
 
-function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode) {
+function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode, jwt) {
         // console.log("doneFunc:");
         // console.log(doneFunc);
         console.log(">>>>>>>>>>>>>> calling " + uri + " with an HTTP " + action + " ...");
-        if(typeof mode === 'undefined') {
+        if(typeof mode === 'undefined' || mode.trim() === '' || mode === null) {
             var payload;
             var temp = '';
             if(action === 'POST' || action === 'PUT') payload = JSON.stringify(jsonData);
@@ -53,13 +53,21 @@ function commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc,
                 return ret;
             }
 
+            var finalHeader = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            };
+            if(typeof jwt !== 'undefined') {
+              finalHeader = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + jwt
+              };
+            } 
             fetch(base_url + uri, {
               method: action,
               // mode: 'no-cors',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
+              headers: finalHeader,
               body: payload
             })
             .then(json)
@@ -282,8 +290,8 @@ var fetch = require('node-fetch');
 var app = module.exports = {
 
     //=== high level convenient method
-    api: function(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode) {
-        commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode);
+    api: function(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode, jwt) {
+        commonAPI(base_url, uri, action, model, method, jsonData, cb, doneFunc, mode, jwt);
     } //api end
 
 }; //api module.exports end

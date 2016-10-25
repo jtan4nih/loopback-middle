@@ -1,1 +1,0 @@
-r login && r swagger
