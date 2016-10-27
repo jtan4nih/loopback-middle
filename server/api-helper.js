@@ -70,10 +70,16 @@ console.log("api-helper.js: HTTP fetch " + action + " request: " + base_url + ur
                 return ret;
             }
 
+            var jwtStr;
+            if(typeof localStorage === 'undefined') {
+                jwtStr = localStorage1.getItem('stem2token');
+            } else {
+                jwtStr = localStorage.getItem('stem2token');
+            }
             var finalHeader = {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + (localStorage1 && localStorage1.getItem('stem2token')) || (localStorage && localStorage.getItem('stem2token'))
+                'Authorization': 'Bearer ' + jwtStr
             };
             if(typeof jwt !== 'undefined') {
               finalHeader = {
