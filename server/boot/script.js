@@ -12,6 +12,7 @@ module.exports = function(app) {
 	var Flags = app.models.Flags;
 	var Questspowerups = app.models.Questspowerups;
 	var Usersquests = app.models.Usersquests;	//TypeError: params.through.belongsTo is not a function
+	var Audits = app.models.Audits;
 	// var Usersachievements = app.models.Usersachievements;
 
 	// Powerups.belongsTo(Quests, {foreignKey: 'questsId', as: 'quests'});
@@ -39,8 +40,17 @@ module.exports = function(app) {
 		Questspowerups.attachTo(db);
 		Usersquests.attachTo(db);
 		// Usersachievements.attachTo(db);
-
+		Audits.attachTo(db);
 		console.log('In-memory persistence only!');
 	}
+
+
+	var es = require('event-stream');
+	// module.exports = function(app) {
+	  Audits.createChangeStream(function(err, changes) {
+	    changes.pipe(es.stringify()).pipe(process.stdout);
+	  });
+	  Audits.create({foo: 'bar'});
+	// }
 
 };
