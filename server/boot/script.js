@@ -49,8 +49,9 @@ module.exports = function(app) {
 	// module.exports = function(app) {
 	  Audits.createChangeStream(function(err, changes) {
 	    changes.pipe(es.stringify()).pipe(process.stdout);
+	    console.log("script.js createChangeStream() Audits ready!");
 	  });
-	  Audits.create({foo: 'bar'});
+	  // Audits.create({foo: 'bar'});
 	// }
 
 };
