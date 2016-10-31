@@ -1,0 +1,105 @@
+{
+  "resource": [
+    {
+      "name": "economy",
+      "label": "Economy",
+      "plural": "Economy",
+      "alias": null,
+      "field": [
+        {
+          "name": "id",
+          "label": "Id",
+          "type": "pk"
+        },
+        {
+          "name": "owner",
+          "label": "Owner",
+          "type": "integer",
+          "allow_null": false
+        },
+        {
+          "name": "resource",
+          "label": "Resource",
+          "type": "string",
+          "size": 2000,
+          "allow_null": true
+        },
+        {
+          "name": "total",
+          "label": "Total Count",
+          "type": "integer",
+          "allow_null": true
+        },
+        {
+          "name": "completed",
+          "label": "Completed Count",
+          "type": "integer",
+          "allow_null": true
+        },
+        {
+          "name": "entity",
+          "label": "Entity",
+          "type": "string",
+          "size": 2000,
+          "allow_null": true
+        },
+        {
+          "name": "weight",
+          "label": "Weight",
+          "type": "integer",
+          "allow_null": true
+        },
+        {
+          "name": "duration",
+          "label": "Time Spent",
+          "type": "integer",
+          "allow_null": true
+        },
+        {
+          "name": "state",
+          "label": "State",
+          "type": "string",
+          "size": 100,
+          "allow_null": true
+        },
+        {
+          "name": "completed",
+          "label": "Completed",
+          "type": "boolean",
+          "allow_null": true
+        },
+        {
+          "name": "progress",
+          "label": "Next Level",
+          "type": "boolean",
+          "allow_null": true
+        },
+        {
+          "name": "points",
+          "label": "Earned Points",
+          "type": "integer",
+          "allow_null": true
+        },
+        {
+          "name": "awards",
+          "label": "Awards",
+          "type": "string",
+          "size": 2000,
+          "allow_null": true
+        },
+        {
+          "name": "createdAt",
+          "label": "Created At",
+          "type": "timestamp_on_create",
+          "allow_null": true
+        },
+        {
+          "name": "updatedAt",
+          "label": "Updated At",
+          "type": "timestamp_on_update",
+          "allow_null": true
+        }
+      ]
+    }
+  ]
+}
