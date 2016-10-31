@@ -84,5 +84,9 @@
   "Audits": {
     "dataSource": "stem2local",
     "public": true
+  },
+  "Economy": {
+    "dataSource": "stem2local",
+    "public": true
   }
 }
