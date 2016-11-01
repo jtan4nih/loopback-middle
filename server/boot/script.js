@@ -1,3 +1,5 @@
+var states = require('../appstates.js');
+
 module.exports = function(app) {
 	//TODO The relationshos should be configured via codes as the following but it DIDN'T WORK!!!
 	var Users = app.models.Users;
