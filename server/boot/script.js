@@ -46,7 +46,7 @@ module.exports = function(app) {
 		console.log('In-memory persistence only!');
 	}
 
-
+	//=== https://docs.strongloop.com/display/public/LB/PersistedModel+REST+API
 	var es = require('event-stream');
 	// module.exports = function(app) {
 	  Audits.createChangeStream(function(err, changes) {

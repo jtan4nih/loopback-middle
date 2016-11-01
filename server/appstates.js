@@ -1,12 +1,16 @@
 var app = module.exports = {
 
-    check: function(app, model, next) {
-        var Powerups = app.models.Powerups;
-        var Quests = app.models.Quests;
-        var Economy = app.models.Economy;
-        var Goals = app.models.Goals;
+    check: function(models, model, next) {
+        var Powerups = models.Powerups;
+        var Quests = models.Quests;
+        var Economy = models.Economy;
+        var Goals = models.Goals;
 
-        Economy.findOne({where: {"owner": messageid, "owner": loggedinownerid}}, function (err, data) {
+        if(typeof Economy === 'undefined') {
+            next();
+            throw "Economy can not be empty or NULL!";
+        }
+        Economy.findOne({where: {"owner": model.id}}, function (err, data) {
             var state = evaluate(data);
             next(state);
         });
