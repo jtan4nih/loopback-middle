@@ -8,13 +8,7 @@ var server1 = require('../server/server1.js');
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 // var app = loopback();
-var ds = loopback.createDataSource('MySQL', {
-  "host": dburl,
-  "port": 3306,
-  "database": dbname,
-  "username": dbuser,
-  "password": dbpass
-});
+var ds;
 
 var appstates = require("../server/appstates.js");
 var console = require("util");
@@ -31,6 +25,14 @@ process.on('exit', function() {
 
 var models = {}, econonyModel, powerUpsModel, questsModel;
 function init(models, next, done) {
+    ds = loopback.createDataSource('MySQL', {
+      "host": dburl,
+      "port": 3306,
+      "database": dbname,
+      "username": dbuser,
+      "password": dbpass
+    });
+
     ds.discoverAndBuildModels("Economy", {}, function (err, models) {
             // console.log("Models: ", models);
             models.Economy.findOne({}, function (err, eco) {
@@ -61,59 +63,66 @@ function init(models, next, done) {
 describe("Loopback Server", function() {
     var models, complete;
     var app, server;
-    init(models, next, null);
-    function next(m) {
-        // console.log("next: <==============================");
-        models = m;
-        complete();
-    }
     beforeEach(function(done) {
-        complete = done;
+        function next(m) {
+            // console.log("next: <==============================");
+            models = m;
+            done();
+        }
         // boot(loopback(), __dirname, function(err) {
         //     if (err) throw err;
 
         //     // start the server if `$ node server.js`
         //     if (require.main === module) {
                 // app.start();
+                if(typeof ds !== 'undefined') ds.disconnect();
+                if(typeof server !== 'undefined') server.close();
                 app = server1.start();
                 server = app.server;
-                // init(models, next, done);
+                init(models, next, done);
         //     }
         // });
     })
-    // afterEach(function(done) {
-        // ds.disconnect();
-        // done();
-    // });
+    afterEach(function(done) {
+        ds.disconnect();
+        server.close();
+        ds = undefined;
+        done();
+    });
     // describe("PowerUps", function() {
-        it("action test - should trigger quest progression", function(done) {
-            next = function(state) {
-                console.log('-------------------------------------> states_spec.js: begin 1');
-                console.log('state returned = [');
-                console.log(state);
-                console.log(']');
-                server.close();
-ds.disconnect();
-                done();
-                console.log('<------------------------------------- states_spec.js: end 1');
-            }
-            appstates.check(app, models, powerUpsModel, next);
-            // appstates.check(app, models, questsModel, next);
-            // appstates.check(app, models, econonyModel, next);
+        it("action test - should trigger quest progression 2", function(done) {
+            console.log('-------------------------------------> states_spec.js: begin 2');
+            // var state = appstates.check(app, models, powerUpsModel);
+            var state = appstates.check(app, models, questsModel);
+            // var state = appstates.check(app, models, econonyModel);
+            console.log('state returned = [');
+            console.log(state);
+            console.log(']');
+            done();
+            console.log('<------------------------------------- states_spec.js: end 2');
         });
-return
-        it("action test - should not trigger quest progression", function(done) {
-            next = function(state) {
-                console.log('-------------------------------------> states_spec.js: begin 2');
-                console.log('state returned = [');
-                console.log(state);
-                console.log(']');
-                server.close();
-ds.disconnect();
-                done();
-                console.log('<------------------------------------- states_spec.js: end 2');
-            }
-            appstates.check(app, models, powerUpsModel, next);
+return;
+
+        it("action test - should trigger quest progression 1", function(done) {
+            console.log('-------------------------------------> states_spec.js: begin 1');
+            var state = appstates.check(app, models, powerUpsModel);
+            console.log('state returned = [');
+            console.log(state);
+            console.log(']');
+            done();
+            console.log('<------------------------------------- states_spec.js: end 1');
+        });
+
+        it("action test - should trigger quest progression 3", function(done) {
+            console.log('-------------------------------------> states_spec.js: begin 3');
+            var state = appstates.check(app, models, powerUpsModel);
+            // var state = appstates.check(app, models, questsModel);
+            // var state = appstates.check(app, models, econonyModel);
+            console.log('state returned = [');
+            console.log(state);
+            console.log(']');
+            done();
+            console.log('<------------------------------------- states_spec.js: end 3');
         });
 
     // }) //end of inner describe

@@ -20,7 +20,7 @@ var compareObjects = function(o1, o2){
 
 var app = module.exports = {
 
-    check: function(loopback, models, model, next) {
+    check: function(loopback, models, model) {
         // console.log(models);
         var Powerups = models.Powerups;
         var Quests = models.Quests;
@@ -36,13 +36,15 @@ var app = module.exports = {
         console.log(model);
 
         if(typeof Economy === 'undefined') {
-            next();
-            throw "Economy can not be empty or NULL!";
+            // next();
+            throw "Economy is empty or NULL!";
+            // return;
         }
         // Economy.findOne({where: {"owner": model.id}}, function (err, data) {
             // var state = evaluate(data);
             var state = evaluate(Economy);
-            next(state);
+            // next(state);
+            return state;
         // });
 
         function evaluate(data) {
