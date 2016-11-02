@@ -1,23 +1,32 @@
+// var loopback = require('../server/server.js');
+
 var app = module.exports = {
 
-    check: function(models, model, next) {
+    check: function(loopback, models, model, next) {
+        // console.log(models);
         var Powerups = models.Powerups;
         var Quests = models.Quests;
         var Economy = models.Economy;
         var Goals = models.Goals;
+        console.log('Economy -------------------->');
+        console.log(Economy);
+        console.log('loopback.models.Powerups -------------------->');
+        console.log(loopback.models.Powerups);
 
         if(typeof Economy === 'undefined') {
             next();
             throw "Economy can not be empty or NULL!";
         }
-        Economy.findOne({where: {"owner": model.id}}, function (err, data) {
-            var state = evaluate(data);
+        // Economy.findOne({where: {"owner": model.id}}, function (err, data) {
+            // var state = evaluate(data);
+            var state = evaluate(Economy);
             next(state);
-        });
+        // });
 
         function evaluate(data) {
             var state = data; //this needs to be from the economy!!!
-            if(model instanceof Powerups) {
+            console.log(model);
+            if(model instanceof loopback.models.Powerups) {
                 if(model.name === 'Stock the Fridge') {
                     if(model.completed) state.completedCount++; //logic #1
                     state.points = model.weight * 1 + state.points;     //logic #2
@@ -34,7 +43,7 @@ var app = module.exports = {
                     if(state.completedCount === state.totalCount) state.progress = true; //advance to the next quest!
                 }
             } else
-            if(model instanceof Quests) {
+            if(model instanceof loopback.models.Quests) {
                 var threshold = 1;  //just happened to be the total quests - 1
                 if(model.name === 'Get it Started') {
                     if(model.completed) state.completedCount++; //logic #1
@@ -59,7 +68,7 @@ var app = module.exports = {
                     }
                 }
             } else
-            if(model instanceof Goals) {
+            if(model instanceof loopback.models.Goals) {
                 var threshold = 1;  //only a single goal for now
                 if(model.name === 'Yeah!') {
                     //reset the states and start all over
@@ -67,7 +76,7 @@ var app = module.exports = {
                 }
             }
 
-            return state;
+            next(state);
         }
     }
 
