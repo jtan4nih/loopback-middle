@@ -4,8 +4,9 @@ var dbname = process.env.MYSQL_DB || 'stem2dev_db';
 var dbuser = process.env.MYSQL_USER || 'root';
 var dbpass = process.env.MYSQL_PASSWORD || 'admin';
 
-var app = require('../server/server.js');
+var server1 = require('../server/server1.js');
 var loopback = require('loopback');
+var boot = require('loopback-boot');
 // var app = loopback();
 var ds = loopback.createDataSource('MySQL', {
   "host": dburl,
@@ -59,28 +60,43 @@ function init(models, next, done) {
 
 describe("Loopback Server", function() {
     var models, complete;
+    var app, server;
     function next(m) {
+        console.log("next: <==============================");
         models = m;
         complete();
     }
     beforeEach(function(done) {
         complete = done;
-        init(models, next, done);
+        // boot(loopback(), __dirname, function(err) {
+        //     if (err) throw err;
+
+        //     // start the server if `$ node server.js`
+        //     if (require.main === module) {
+                // app.start();
+                app = server1.start();
+                server = app.server;
+                init(models, next, done);
+        //     }
+        // });
     })
-    afterEach(function(done) {
+    // afterEach(function(done) {
         // ds.disconnect();
         // done();
-    });
+    // });
     // describe("PowerUps", function() {
         it("action test - should not trigger quest progression", function(done) {
             next = function(state) {
                 console.log('<------------------------------------- begin');
                 // console.log(done);
                 console.log(state);
-                // done();
+                server.close();
+                done();
                 console.log('<------------------------------------- done');
             }
             appstates.check(app, models, powerUpsModel, next);
+            ds.disconnect();
+            done();
         });
     // }) //end of inner describe
 }); //end of outer describe

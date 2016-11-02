@@ -10,8 +10,12 @@ var app = module.exports = {
         var Goals = models.Goals;
         console.log('Economy -------------------->');
         console.log(Economy);
+        console.log('Powerups -------------------->');
+        console.log(Powerups);
         console.log('loopback.models.Powerups -------------------->');
         console.log(loopback.models.Powerups);
+        console.log('model -------------------->');
+        console.log(model);
 
         if(typeof Economy === 'undefined') {
             next();
@@ -76,7 +80,7 @@ var app = module.exports = {
                 }
             }
 
-            next(state);
+            return state;
         }
     }
 
