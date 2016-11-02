@@ -45,6 +45,7 @@ function init(models, next, done) {
                         ds.discoverAndBuildModels("Quests", {}, function (err, models) {
                             models.Quests.findOne({}, function (err, que) {
                                 // console.log("Quests: ", que);
+                                questsModel = que;
                                 models.Powerups = powerUpsModel;
                                 models.Quests = questsModel;
                                 models.Economy = econonyModel;
@@ -92,7 +93,6 @@ describe("Loopback Server", function() {
     // describe("PowerUps", function() {
         it("action test - should trigger quest progression 2", function(done) {
             console.log('-------------------------------------> states_spec.js: begin 2');
-            // var state = appstates.check(app, models, powerUpsModel);
             var state = appstates.check(app, models, questsModel);
             // var state = appstates.check(app, models, econonyModel);
             console.log('state returned = [');
@@ -101,7 +101,7 @@ describe("Loopback Server", function() {
             done();
             console.log('<------------------------------------- states_spec.js: end 2');
         });
-return;
+// return;
 
         it("action test - should trigger quest progression 1", function(done) {
             console.log('-------------------------------------> states_spec.js: begin 1');
@@ -115,9 +115,9 @@ return;
 
         it("action test - should trigger quest progression 3", function(done) {
             console.log('-------------------------------------> states_spec.js: begin 3');
-            var state = appstates.check(app, models, powerUpsModel);
+            // var state = appstates.check(app, models, powerUpsModel);
             // var state = appstates.check(app, models, questsModel);
-            // var state = appstates.check(app, models, econonyModel);
+            var state = appstates.check(app, models, econonyModel);
             console.log('state returned = [');
             console.log(state);
             console.log(']');

@@ -1,6 +1,6 @@
 // var loopback = require('../server/server.js');
 
-var compareObjects = function(o1, o2){
+var compareObjects = function(o1, o2) {
     for(var p in o1){
         if(o1.hasOwnProperty(p)){
             if(o1[p] !== o2[p]){
@@ -18,6 +18,26 @@ var compareObjects = function(o1, o2){
     return true;
 }
 
+// //Quests
+// var compareObjects1 = function(o1, o2) {
+//     var c1, c2, c3;
+//     c1 = o1.title;
+//     c2 = o1.threshold;
+//     c3 = o1.powerupsRel;
+    
+//     return c1&&c2&c3;
+// }
+
+// //PU
+// var compareObjects2 = function(o1, o2) {
+//     var c1, c2, c3;
+//     c1 = o1.title;
+//     c2 = o1.what;
+//     c3 = o1.how;
+    
+//     return c1&&c2&c3;
+// }
+
 var app = module.exports = {
 
     check: function(loopback, models, model) {
@@ -26,14 +46,15 @@ var app = module.exports = {
         var Quests = models.Quests;
         var Economy = models.Economy;
         var Goals = models.Goals;
-        console.log('Economy -------------------->');
-        console.log(Economy);
-        console.log('Powerups -------------------->');
-        console.log(Powerups);
-        console.log('loopback.models.Powerups -------------------->');
-        console.log(loopback.models.Powerups);
-        console.log('model -------------------->');
-        console.log(model);
+        // console.log('Economy -------------------->');
+        // console.log(Economy);
+        // console.log('Powerups -------------------->');
+        // console.log(Powerups);
+        // console.log('typeof(Powerups) -------------------->');            
+        // console.log(typeof(Powerups));
+        // console.log(loopback.models.Powerups);
+        // console.log('model -------------------->');
+        // console.log(model);
 
         if(typeof Economy === 'undefined') {
             // next();
@@ -42,7 +63,7 @@ var app = module.exports = {
         }
         // Economy.findOne({where: {"owner": model.id}}, function (err, data) {
             // var state = evaluate(data);
-            var state = evaluate(Economy);
+            var state = evaluate(model);
             // next(state);
             return state;
         // });
@@ -92,6 +113,10 @@ var app = module.exports = {
                     }
                 }
             } 
+            else
+            if(compareObjects(model, Economy)) {
+                state = {};
+            }
             // else
             // if(compareObjects(model, Goals)) {
             //     var threshold = 1;  //only a single goal for now
