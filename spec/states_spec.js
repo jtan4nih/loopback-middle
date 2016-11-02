@@ -46,7 +46,7 @@ function init(models, next, done) {
                                 models.Powerups = powerUpsModel;
                                 models.Quests = questsModel;
                                 models.Economy = econonyModel;
-                                ds.disconnect();
+                                // ds.disconnect();
                                 next(models);
                                 // done();
                             });
@@ -61,8 +61,9 @@ function init(models, next, done) {
 describe("Loopback Server", function() {
     var models, complete;
     var app, server;
+    init(models, next, null);
     function next(m) {
-        console.log("next: <==============================");
+        // console.log("next: <==============================");
         models = m;
         complete();
     }
@@ -76,7 +77,7 @@ describe("Loopback Server", function() {
                 // app.start();
                 app = server1.start();
                 server = app.server;
-                init(models, next, done);
+                // init(models, next, done);
         //     }
         // });
     })
@@ -85,18 +86,35 @@ describe("Loopback Server", function() {
         // done();
     // });
     // describe("PowerUps", function() {
-        it("action test - should not trigger quest progression", function(done) {
+        it("action test - should trigger quest progression", function(done) {
             next = function(state) {
-                console.log('<------------------------------------- begin');
-                // console.log(done);
+                console.log('-------------------------------------> states_spec.js: begin 1');
+                console.log('state returned = [');
                 console.log(state);
+                console.log(']');
                 server.close();
+ds.disconnect();
                 done();
-                console.log('<------------------------------------- done');
+                console.log('<------------------------------------- states_spec.js: end 1');
             }
             appstates.check(app, models, powerUpsModel, next);
-            ds.disconnect();
-            done();
+            // appstates.check(app, models, questsModel, next);
+            // appstates.check(app, models, econonyModel, next);
         });
+return
+        it("action test - should not trigger quest progression", function(done) {
+            next = function(state) {
+                console.log('-------------------------------------> states_spec.js: begin 2');
+                console.log('state returned = [');
+                console.log(state);
+                console.log(']');
+                server.close();
+ds.disconnect();
+                done();
+                console.log('<------------------------------------- states_spec.js: end 2');
+            }
+            appstates.check(app, models, powerUpsModel, next);
+        });
+
     // }) //end of inner describe
 }); //end of outer describe
