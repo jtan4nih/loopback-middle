@@ -1,0 +1,1 @@
+set PATH=c:\dreamfactory-2.3.1-0\mysql\bin;%PATH%
