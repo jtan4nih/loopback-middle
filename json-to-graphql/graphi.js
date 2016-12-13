@@ -1,9 +1,21 @@
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
+// var schema1 = require('./schema.js'); //TODO cause error "Error: RootQueryType.description field type must be Output Type but got: null."
 var { buildSchema } = require('graphql');
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
+  type Audits {
+    subject: String
+    description: String
+    service: String
+    extra: String
+    owner: String
+    createdat: String
+    updatedat: String
+    id: Int
+  }
+
   type RandomDie {
     numSides: Int!
     rollOnce: Int!
@@ -13,10 +25,24 @@ var schema = buildSchema(`
   type Query {
     hello: String
     getDie(numSides: Int): RandomDie
+    getAudits: Audits
   }
 `);
 
 // This class implements the RandomDie GraphQL type
+class Audits {
+  constructor() {
+    this.subject = 'subject 1'
+    this.description = 'desc 1'
+    this.service = 'service 1'
+    this.extra = ''
+    this.owner = 'root'
+    this.createdat = '12-12-2016'
+    this.updatedat = '12-12-2016'
+    this.id = -1
+  }
+}
+
 class RandomDie {
   constructor(numSides) {
     this.numSides = numSides;
@@ -37,6 +63,9 @@ class RandomDie {
 
 // The root provides the top-level API endpoints
 var root = {
+  getAudits: function () {
+    return new Audits();
+  },
   hello: function () { 
     return "world"
   },
