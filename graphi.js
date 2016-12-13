@@ -1,31 +1,49 @@
-/**
-	Basic types:
-	
-	http://graphql.org/graphql-js/basic-types/
-
-	cURL test:
-
-	On Windows, do not use single quotes but use just the double qoutes e.g.
-
-	curl -X POST -H "Content-Type: application/json" -d "{\"query\": \"{ hello }\"}" http://localhost:4000/graphql
-*/
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
 var { buildSchema } = require('graphql');
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
+  type RandomDie {
+    numSides: Int!
+    rollOnce: Int!
+    roll(numRolls: Int!): [Int]
+  }
+
   type Query {
     hello: String
+    getDie(numSides: Int): RandomDie
   }
 `);
 
-// The root provides a resolver function for each API endpoint
+// This class implements the RandomDie GraphQL type
+class RandomDie {
+  constructor(numSides) {
+    this.numSides = numSides;
+  }
+
+  rollOnce() {
+    return 1 + Math.floor(Math.random() * this.numSides);
+  }
+
+  roll({numRolls}) {
+    var output = [];
+    for (var i = 0; i < numRolls; i++) {
+      output.push(this.rollOnce());
+    }
+    return output;
+  }
+}
+
+// The root provides the top-level API endpoints
 var root = {
-  hello: () => {
-    return 'Hello world!';
+  hello: function () { 
+    return "world"
   },
-};
+  getDie: function ({numSides}) {
+    return new RandomDie(numSides || 6);
+  }
+}
 
 var app = express();
 app.use('/graphql', graphqlHTTP({

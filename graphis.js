@@ -9,7 +9,7 @@ graphQLSchema('./stem-models-config/openapi/swagger.json').then(schema => {
     return {
       schema,
       context: {
-        GQLProxyBaseUrl: 'http://petstore.swagger.io/v2'
+        GQLProxyBaseUrl: 'http://localhost:3000'
       },
       graphiql: true
     };
