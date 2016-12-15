@@ -2,6 +2,8 @@ All the json files generated here were generated manually by hitting the Swagger
 
 References:
 
+https://github.com/matthewmueller/graph.ql
+
 http://graphql.org/learn/schema/
 
 https://www.npmjs.com/package/graphql-custom-datetype

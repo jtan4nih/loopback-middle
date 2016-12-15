@@ -7,16 +7,17 @@ var casual = require('casual');
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
-    subjects: [Subjects]
+    subjects(first: Int, skip: Int): [Subjects]
     constructs: [Constructs]
     measures: [Measures]
     results: [Results]
     badges: [Badges]
-    getSubjects: Subjects
-    getAudits: Audits
-    getDie(numSides: Int): RandomDie
-    hello: String
   }
+
+  #getSubjects: Subjects
+  #getAudits: Audits
+  #getDie(numSides: Int): RandomDie
+  #hello: String
 
   type Subjects {
     name: String
@@ -126,13 +127,12 @@ var schema = buildSchema(`
     id: Int
   }
 
-  type RandomDie {
-    numSides: Int!
-    rollOnce: Int!
-    roll(numRolls: Int!): [Int]
-  }
+  #type RandomDie {
+  # numSides: Int!
+  # rollOnce: Int!
+  # roll(numRolls: Int!): [Int]
+  #}
 `);
-
 
 // This class implements the RandomDie GraphQL type
 class Audits {
@@ -186,7 +186,7 @@ class RandomDie {
 
 // The root provides the top-level API endpoints
 var root = {
-  subjects: function () { 
+  subjects: function ({first, skip}) { 
     var subjectsList = [new Subjects(),new Subjects(),new Subjects(),new Subjects(),new Subjects()];
     var count = 0;
     subjectsList[count].name = casual.name;
@@ -259,19 +259,27 @@ var root = {
     subjectsList[count].results.id = count;
     subjectsList[count++].id = count;
 
-    return subjectsList
-  },
-  getSubjects: function () {
-    return new Subjects();
-  },
-  getAudits: function () {
-    return new Audits();
-  },
-  hello: function () { 
-    return "world"
+    var finalList = subjectsList;
+    if(first && first > 0) {
+      finalList = [first];
+      var j=0;
+      if(typeof skip === 'undefined') {
+        skip = 0;
+      }
+      for(var i=0; i<first && first < subjectsList.length; i++) {
+        if(i >= skip) {
+          finalList[j] = subjectsList[i];
+          j++;
+        }
+      }
+    }
+    return finalList
   },
   getDie: function ({numSides}) {
     return new RandomDie(numSides || 6);
+  },
+  hello: function () { 
+    return "world"
   }
 }
 
