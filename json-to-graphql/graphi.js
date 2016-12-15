@@ -8,10 +8,14 @@ var casual = require('casual');
 var schema = buildSchema(`
   type Query {
     subjects: [Subjects]
+    constructs: [Constructs]
+    measures: [Measures]
+    results: [Results]
+    badges: [Badges]
     getSubjects: Subjects
     getAudits: Audits
-    hello: String
     getDie(numSides: Int): RandomDie
+    hello: String
   }
 
   type Subjects {
@@ -19,8 +23,8 @@ var schema = buildSchema(`
     description: String
     type: String
     construct: Constructs
-    input: Measures
-    output: Results
+    measures: Measures
+    results: Results
     createdat: String
     updatedat: String
     id: Int
@@ -45,13 +49,34 @@ var schema = buildSchema(`
     id: Int
   }
 
+  type Measures {
+    name: String
+    subject: Subjects
+    description: String
+    type: String
+    createdat: String
+    updatedat: String
+    id: Int
+  }
+
   type Results {
     name: String
     subject: Subjects
     description: String
     type: String
+    points: Points
     awards: Awards
     goals: Goals
+    createdat: String
+    updatedat: String
+    id: Int
+  }
+
+  type Points {
+    owner: Results
+    description: String
+    type: String
+    value: Int
     createdat: String
     updatedat: String
     id: Int
@@ -67,7 +92,22 @@ var schema = buildSchema(`
   }
 
   type Goals {
-    owner: Awards
+    owner: Results
+    description: String
+    type: String
+    createdat: String
+    updatedat: String
+    id: Int
+  }
+
+  type Achievements {
+    subject: Subjects
+    awards: [Awards]
+    goals: [Goals]
+  }
+
+  type Badges {
+    owner: Achievements
     description: String
     type: String
     createdat: String
@@ -153,70 +193,70 @@ var root = {
     subjectsList[count].construct = new Constructs();
     subjectsList[count].construct.name = casual.title;
     subjectsList[count].construct.id = count;
-    subjectsList[count].input = new Measures();
-    subjectsList[count].input.name = casual.title;
-    subjectsList[count].input.subject = subjectsList[count];
-    subjectsList[count].input.id = count;
-    subjectsList[count].output = new Results();
-    subjectsList[count].output.name = casual.title;
-    subjectsList[count].output.subject = subjectsList[count];
-    subjectsList[count].output.id = count;
+    subjectsList[count].measures = new Measures();
+    subjectsList[count].measures.name = casual.title;
+    subjectsList[count].measures.subject = subjectsList[count];
+    subjectsList[count].measures.id = count;
+    subjectsList[count].results = new Results();
+    subjectsList[count].results.name = casual.title;
+    subjectsList[count].results.subject = subjectsList[count];
+    subjectsList[count].results.id = count;
     subjectsList[count++].id = count;
 
     subjectsList[count].name = casual.name;
     subjectsList[count].construct = new Constructs();
     subjectsList[count].construct.name = casual.title;
     subjectsList[count].construct.id = count;
-    subjectsList[count].input = new Measures();
-    subjectsList[count].input.name = casual.title;
-    subjectsList[count].input.subject = subjectsList[count];
-    subjectsList[count].input.id = count;
-    subjectsList[count].output = new Results();
-    subjectsList[count].output.name = casual.title;
-    subjectsList[count].output.subject = subjectsList[count];
-    subjectsList[count].output.id = count;
+    subjectsList[count].measures = new Measures();
+    subjectsList[count].measures.name = casual.title;
+    subjectsList[count].measures.subject = subjectsList[count];
+    subjectsList[count].measures.id = count;
+    subjectsList[count].results = new Results();
+    subjectsList[count].results.name = casual.title;
+    subjectsList[count].results.subject = subjectsList[count];
+    subjectsList[count].results.id = count;
     subjectsList[count++].id = count;
     
     subjectsList[count].name = casual.name;
     subjectsList[count].construct = new Constructs();
     subjectsList[count].construct.name = casual.title;
     subjectsList[count].construct.id = count;
-    subjectsList[count].input = new Measures();
-    subjectsList[count].input.name = casual.title;
-    subjectsList[count].input.subject = subjectsList[count];
-    subjectsList[count].input.id = count;
-    subjectsList[count].output = new Results();
-    subjectsList[count].output.name = casual.title;
-    subjectsList[count].output.subject = subjectsList[count];
-    subjectsList[count].output.id = count;
+    subjectsList[count].measures = new Measures();
+    subjectsList[count].measures.name = casual.title;
+    subjectsList[count].measures.subject = subjectsList[count];
+    subjectsList[count].measures.id = count;
+    subjectsList[count].results = new Results();
+    subjectsList[count].results.name = casual.title;
+    subjectsList[count].results.subject = subjectsList[count];
+    subjectsList[count].results.id = count;
     subjectsList[count++].id = count;
     
     subjectsList[count].name = casual.name;
     subjectsList[count].construct = new Constructs();
     subjectsList[count].construct.name = casual.title;
     subjectsList[count].construct.id = count;
-    subjectsList[count].input = new Measures();
-    subjectsList[count].input.name = casual.title;
-    subjectsList[count].input.subject = subjectsList[count];
-    subjectsList[count].input.id = count;
-    subjectsList[count].output = new Results();
-    subjectsList[count].output.name = casual.title;
-    subjectsList[count].output.subject = subjectsList[count];
-    subjectsList[count].output.id = count;
+    subjectsList[count].measures = new Measures();
+    subjectsList[count].measures.name = casual.title;
+    subjectsList[count].measures.subject = subjectsList[count];
+    subjectsList[count].measures.id = count;
+    subjectsList[count].results = new Results();
+    subjectsList[count].results.name = casual.title;
+    subjectsList[count].results.subject = subjectsList[count];
+    subjectsList[count].results.id = count;
     subjectsList[count++].id = count;
     
     subjectsList[count].name = casual.name;
     subjectsList[count].construct = new Constructs();
     subjectsList[count].construct.name = casual.title;
     subjectsList[count].construct.id = count;
-    subjectsList[count].input = new Measures();
-    subjectsList[count].input.name = casual.title;
-    subjectsList[count].input.subject = subjectsList[count];
-    subjectsList[count].input.id = count;
-    subjectsList[count].output = new Results();
-    subjectsList[count].output.name = casual.title;
-    subjectsList[count].output.subject = subjectsList[count];
-    subjectsList[count].output.id = count;
+    subjectsList[count].measures = new Measures();
+    subjectsList[count].measures.name = casual.title;
+    subjectsList[count].measures.subject = subjectsList[count];
+    subjectsList[count].measures.id = count;
+    subjectsList[count].results = new Results();
+    subjectsList[count].results.name = casual.title;
+    subjectsList[count].results.subject = subjectsList[count];
+    subjectsList[count].results.id = count;
     subjectsList[count++].id = count;
 
     return subjectsList
