@@ -6,6 +6,7 @@ var schema = buildSchema(`
     subjects(first: Int, skip: Int): [Subjects]
     constructs: [Constructs]
     measures: [Measures]
+    points: [Points]
     results: [Results]
     badges: [Badges]
   }
@@ -51,11 +52,12 @@ var schema = buildSchema(`
     id: String
   }
 
-  type Measures {
+  type Points {
     name: String
-    subject: Subjects
+    owner: Measures
     description: String
     type: String
+    value: Int
     createdat: String
     updatedat: String
     id: String
@@ -66,7 +68,7 @@ var schema = buildSchema(`
     subject: Subjects
     description: String
     type: String
-    points: Points
+    measures: Measures
     awards: Awards
     goals: Goals
     createdat: String
@@ -74,17 +76,8 @@ var schema = buildSchema(`
     id: String
   }
 
-  type Points {
-    owner: Results
-    description: String
-    type: String
-    value: Int
-    createdat: String
-    updatedat: String
-    id: String
-  }
-
   type Awards {
+    name: String
     owner: Results
     description: String
     type: String
@@ -94,9 +87,11 @@ var schema = buildSchema(`
   }
 
   type Goals {
+    name: String
     owner: Results
     description: String
     type: String
+    state: String
     createdat: String
     updatedat: String
     id: String
@@ -109,6 +104,7 @@ var schema = buildSchema(`
   }
 
   type Badges {
+    name: String
     owner: Achievements
     description: String
     type: String
@@ -118,6 +114,7 @@ var schema = buildSchema(`
   }
 
   type Audits {
+    name: String
     subject: Subjects
     description: String
     service: String
