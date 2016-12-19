@@ -1,0 +1,31 @@
+{
+  "resource": [
+    {
+      "name": "achievements",
+      "label": "Achievements",
+      "plural": "Achievements",
+      "alias": null,
+      "field": [
+        {
+          "name": "id",
+          "label": "Id",
+          "type": "pk"
+        },
+        {
+          "name": "awards",
+          "label": "Awards",
+          "type": "string",
+          "size": 80,
+          "allow_null": true
+        },
+        {
+          "name": "goals",
+          "label": "Goals",
+          "type": "string",
+          "size": 80,
+          "allow_null": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "resource": [
+    {
+      "name": "points",
+      "label": "Points",
+      "plural": "Points",
+      "alias": null,
+      "field": [
+        {
+          "name": "id",
+          "label": "Id",
+          "type": "pk"
+        },
+        {
+          "name": "owner",
+          "label": "Owner",
+          "type": "string",
+          "size": 80,
+          "allow_null": true
+        },
+        {
+          "name": "type",
+          "label": "Type",
+          "type": "string",
+          "size": 80,
+          "allow_null": false
+        },
+        {
+          "name": "value",
+          "label": "Value",
+          "type": "number",
+          "allow_null": false
+        }
+      ]
+    }
+  ]
+}

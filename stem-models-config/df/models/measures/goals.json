@@ -1,0 +1,45 @@
+{
+  "resource": [
+    {
+      "name": "constructs",
+      "label": "Constructs",
+      "plural": "Constructs",
+      "alias": null,
+      "field": [
+        {
+          "name": "id",
+          "label": "Id",
+          "type": "pk"
+        },
+        {
+          "name": "owner",
+          "label": "Owner",
+          "type": "string",
+          "size": 80,
+          "allow_null": false
+        },
+        {
+          "name": "type",
+          "label": "Type",
+          "type": "string",
+          "size": 80,
+          "allow_null": false
+        },
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "string",
+          "size": 80,
+          "allow_null": false
+        },
+        {
+          "name": "state",
+          "label": "State",
+          "type": "string",
+          "size": 80,
+          "allow_null": true
+        }
+      ]
+    }
+  ]
+}

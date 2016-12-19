@@ -1,0 +1,71 @@
+{
+  "resource": [
+    {
+      "name": "audits",
+      "label": "Audits",
+      "plural": "Audits",
+      "alias": null,
+      "field": [
+        {
+          "name": "id",
+          "label": "Id",
+          "type": "pk"
+        },
+        {
+          "name": "subject",
+          "label": "Type",
+          "type": "string",
+          "size": 80,
+          "allow_null": false
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "string",
+          "size": 2000,
+          "allow_null": true
+        },
+        {
+          "name": "object",
+          "label": "Object",
+          "type": "string",
+          "size": 2000,
+          "allow_null": true
+        },
+        {
+          "name": "service",
+          "label": "Service",
+          "type": "string",
+          "size": 2000,
+          "allow_null": true
+        },
+        {
+          "name": "extra",
+          "label": "Extra",
+          "type": "string",
+          "size": 2000,
+          "allow_null": true
+        },
+        {
+          "name": "owner",
+          "label": "Owner",
+          "type": "string",
+          "size": 2000,
+          "allow_null": true
+        },
+        {
+          "name": "createdAt",
+          "label": "Created At",
+          "type": "timestamp_on_create",
+          "allow_null": true
+        },
+        {
+          "name": "updatedAt",
+          "label": "Updated At",
+          "type": "timestamp_on_update",
+          "allow_null": true
+        }
+      ]
+    }
+  ]
+}
