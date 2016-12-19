@@ -1,5 +1,10 @@
 {
   "loopback-component-explorer": {
-    "mountPath": "/explorer"
+    "mountPath": "/explorer",
+    "uiDirs": "explorer",
+    "apiInfo": {
+      "title": "STEM Empowerment and Common APIs",
+      "description": "Common APIs are grouped under resources prefixed by _m and _b"
+    }
   }
 }
