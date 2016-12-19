@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "constructs",
-      "label": "Constructs",
-      "plural": "Constructs",
+      "name": "awards",
+      "label": "Awards",
+      "plural": "Awards",
       "alias": null,
       "field": [
         {
@@ -12,11 +12,11 @@
           "type": "pk"
         },
         {
-          "owner": "owner",
+          "name": "owner",
           "label": "Owner",
           "type": "string",
           "size": 80,
-          "allow_null": false
+          "allow_null": true
         },
         {
           "name": "type",
