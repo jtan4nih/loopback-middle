@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "goals",
-      "label": "Goals",
-      "plural": "Goals",
+      "name": "_goals",
+      "label": "_Goals",
+      "plural": "_Goals",
       "alias": null,
       "field": [
         {

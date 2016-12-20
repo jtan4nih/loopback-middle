@@ -16,6 +16,169 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `_achievements`
+--
+
+DROP TABLE IF EXISTS `_achievements`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `_achievements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `awards` varchar(80) DEFAULT NULL,
+  `goals` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `_audits`
+--
+
+DROP TABLE IF EXISTS `_audits`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `_audits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject` varchar(80) NOT NULL,
+  `description` varchar(2000) DEFAULT NULL,
+  `object` varchar(2000) DEFAULT NULL,
+  `service` varchar(2000) DEFAULT NULL,
+  `extra` varchar(2000) DEFAULT NULL,
+  `owner` varchar(2000) DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `_awards`
+--
+
+DROP TABLE IF EXISTS `_awards`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `_awards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(80) DEFAULT NULL,
+  `type` varchar(80) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `_badges`
+--
+
+DROP TABLE IF EXISTS `_badges`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `_badges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(80) DEFAULT NULL,
+  `type` varchar(80) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  `assets` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `_constructs`
+--
+
+DROP TABLE IF EXISTS `_constructs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `_constructs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(80) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `_goals`
+--
+
+DROP TABLE IF EXISTS `_goals`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `_goals` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(80) NOT NULL,
+  `type` varchar(80) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  `state` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `_measures`
+--
+
+DROP TABLE IF EXISTS `_measures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `_measures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(80) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `_points`
+--
+
+DROP TABLE IF EXISTS `_points`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `_points` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(80) DEFAULT NULL,
+  `type` varchar(80) NOT NULL,
+  `value` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `_results`
+--
+
+DROP TABLE IF EXISTS `_results`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `_results` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(80) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `_subjects`
+--
+
+DROP TABLE IF EXISTS `_subjects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `_subjects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(80) DEFAULT NULL,
+  `type` varchar(80) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `achievements`
 --
 
@@ -280,4 +443,4 @@ CREATE TABLE `usersthreads` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-20  7:50:17
+-- Dump completed on 2016-12-20 10:17:02

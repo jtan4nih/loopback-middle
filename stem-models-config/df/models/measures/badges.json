@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "badges",
-      "label": "Badges",
-      "plural": "Badges",
+      "name": "_badges",
+      "label": "_Badges",
+      "plural": "_Badges",
       "alias": null,
       "field": [
         {

@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "audits",
-      "label": "Audits",
-      "plural": "Audits",
+      "name": "_audits",
+      "label": "_Audits",
+      "plural": "_Audits",
       "alias": null,
       "field": [
         {

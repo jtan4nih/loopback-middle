@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "meeasures",
-      "label": "Meeasures",
-      "plural": "Meeasures",
+      "name": "_measures",
+      "label": "_Measures",
+      "plural": "_Measures",
       "alias": null,
       "field": [
         {

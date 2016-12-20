@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "points",
-      "label": "Points",
-      "plural": "Points",
+      "name": "_points",
+      "label": "_Points",
+      "plural": "_Points",
       "alias": null,
       "field": [
         {
@@ -28,7 +28,7 @@
         {
           "name": "value",
           "label": "Value",
-          "type": "number",
+          "type": "integer",
           "allow_null": false
         }
       ]

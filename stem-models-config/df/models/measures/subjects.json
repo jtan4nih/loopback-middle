@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "subjects",
-      "label": "Subjects",
-      "plural": "Subjects",
+      "name": "_subjects",
+      "label": "_Subjects",
+      "plural": "_Subjects",
       "alias": null,
       "field": [
         {

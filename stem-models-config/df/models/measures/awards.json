@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "awards",
-      "label": "Awards",
-      "plural": "Awards",
+      "name": "_awards",
+      "label": "_Awards",
+      "plural": "_Awards",
       "alias": null,
       "field": [
         {

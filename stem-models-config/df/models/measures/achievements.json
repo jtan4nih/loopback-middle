@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "achievements",
-      "label": "Achievements",
-      "plural": "Achievements",
+      "name": "_achievements",
+      "label": "_Achievements",
+      "plural": "_Achievements",
       "alias": null,
       "field": [
         {

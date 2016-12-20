@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "results",
-      "label": "Results",
-      "plural": "Results",
+      "name": "_results",
+      "label": "_Results",
+      "plural": "_Results",
       "alias": null,
       "field": [
         {

@@ -1,9 +1,9 @@
 {
   "resource": [
     {
-      "name": "constructs",
-      "label": "Constructs",
-      "plural": "Constructs",
+      "name": "_constructs",
+      "label": "_Constructs",
+      "plural": "_Constructs",
       "alias": null,
       "field": [
         {
