@@ -5,16 +5,16 @@ module.exports = function(app) {
 	var Users = app.models.Users;
 	var Usersthreads = app.models.Usersthreads;
 	var Quests = app.models.Quests;
-	var Achievements = app.models.Achievements;
+	// var Achievements = app.models.Achievements;
 	var Goals = app.models.Goals;
 	var Messages = app.models.Messages;
-	var Points = app.models.Points;
+	// var Points = app.models.Points;
 	var Powerups = app.models.Powerups;
 	var Threads = app.models.Threads;
 	var Flags = app.models.Flags;
 	var Questspowerups = app.models.Questspowerups;
 	var Usersquests = app.models.Usersquests;	//TypeError: params.through.belongsTo is not a function
-	var Audits = app.models.Audits;
+	// var Audits = app.models.Audits;
 	// var Usersachievements = app.models.Usersachievements;
 
 	// Powerups.belongsTo(Quests, {foreignKey: 'questsId', as: 'quests'});
@@ -32,10 +32,10 @@ module.exports = function(app) {
 		Users.attachTo(db);
 		Usersthreads.attachTo(db);
 		Quests.attachTo(db);
-		Achievements.attachTo(db);
+		// Achievements.attachTo(db);
 		Goals.attachTo(db);
 		Messages.attachTo(db);
-		Points.attachTo(db);
+		// Points.attachTo(db);
 		Powerups.attachTo(db);
 		Threads.attachTo(db);
 		Flags.attachTo(db);
@@ -47,13 +47,10 @@ module.exports = function(app) {
 	}
 
 	//=== https://docs.strongloop.com/display/public/LB/PersistedModel+REST+API
-	var es = require('event-stream');
-	// module.exports = function(app) {
-	  Audits.createChangeStream(function(err, changes) {
-	    changes.pipe(es.stringify()).pipe(process.stdout);
-	    console.log("script.js createChangeStream() Audits ready!");
-	  });
-	  // Audits.create({foo: 'bar'});
-	// }
+	// var es = require('event-stream');
+	//   Audits.createChangeStream(function(err, changes) {
+	//     changes.pipe(es.stringify()).pipe(process.stdout);
+	//     console.log("script.js createChangeStream() Audits ready!");
+	//   });
 
 };
