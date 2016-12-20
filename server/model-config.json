@@ -88,5 +88,29 @@
   "Economy": {
     "dataSource": "stem2local",
     "public": true
+  },
+  "Awards": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Badges": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Constructs": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Measures": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Results": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Subjects": {
+    "dataSource": "stem2local",
+    "public": true
   }
 }
