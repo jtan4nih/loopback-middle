@@ -37,10 +37,6 @@
     "dataSource": "stem2local",
     "public": true
   },
-  "Goals": {
-    "dataSource": "stem2local",
-    "public": true
-  },
   "Messages": {
     "dataSource": "stem2local",
     "public": true
@@ -70,34 +66,6 @@
     "public": true
   },
   "Usersquests": {
-    "dataSource": "stem2local",
-    "public": true
-  },
-  "Economy": {
-    "dataSource": "stem2local",
-    "public": true
-  },
-  "Awards": {
-    "dataSource": "stem2local",
-    "public": true
-  },
-  "Badges": {
-    "dataSource": "stem2local",
-    "public": true
-  },
-  "Constructs": {
-    "dataSource": "stem2local",
-    "public": true
-  },
-  "Measures": {
-    "dataSource": "stem2local",
-    "public": true
-  },
-  "Results": {
-    "dataSource": "stem2local",
-    "public": true
-  },
-  "Subjects": {
     "dataSource": "stem2local",
     "public": true
   }
