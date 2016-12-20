@@ -12,10 +12,10 @@ var json1 = {
   "owner": userId,
   "id": 0
 };
-var Audits = Users.app.models.Audits;
-Audits.create(json1, function(err, data) {
+// var Audits = Users.app.models.Audits;
+// Audits.create(json1, function(err, data) {
 
-console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> users.isAuthenticated userId [' + userId + '] logged in! data = ' + data + " err = " + err);
+// console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> users.isAuthenticated userId [' + userId + '] logged in! data = ' + data + " err = " + err);
       	//console.log('Users Users.isAuthenticated: userId [' + userId + '] password [' + password + ']');	//WARNING: Comment this out in production!!!
         var auth = false;
         var done = function(auth, user) {
@@ -39,7 +39,7 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> users.isAuthenticated userId [' + 
             }
         };
         stemjwt.isAuthenticated(userId, password, done);
-});
+// });
 
     }
 

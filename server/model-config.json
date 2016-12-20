@@ -33,10 +33,6 @@
     "dataSource": "db",
     "public": false
   },
-  "Achievements": {
-    "dataSource": "stem2local",
-    "public": true
-  },
   "Flags": {
     "dataSource": "stem2local",
     "public": true
@@ -46,10 +42,6 @@
     "public": true
   },
   "Messages": {
-    "dataSource": "stem2local",
-    "public": true
-  },
-  "Points": {
     "dataSource": "stem2local",
     "public": true
   },
@@ -78,10 +70,6 @@
     "public": true
   },
   "Usersquests": {
-    "dataSource": "stem2local",
-    "public": true
-  },
-  "Audits": {
     "dataSource": "stem2local",
     "public": true
   },

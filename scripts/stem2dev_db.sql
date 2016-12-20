@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.14-MariaDB, for Win32 (AMD64)
+-- MySQL dump 10.16  Distrib 10.1.19-MariaDB, for Win32 (AMD64)
 --
--- Host: localhost    Database: stem2dev_db
+-- Host: localhost    Database: localhost
 -- ------------------------------------------------------
--- Server version	10.1.14-MariaDB
+-- Server version	10.1.19-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -179,25 +179,6 @@ CREATE TABLE `_subjects` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `achievements`
---
-
-DROP TABLE IF EXISTS `achievements`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `achievements` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` varchar(80) NOT NULL,
-  `description` varchar(80) DEFAULT NULL,
-  `image` varchar(80) NOT NULL DEFAULT 'image.png',
-  `title` varchar(80) NOT NULL,
-  `threshold` int(11) NOT NULL DEFAULT '0',
-  `state` varchar(80) NOT NULL DEFAULT 'Locked',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `flags`
 --
 
@@ -216,24 +197,6 @@ CREATE TABLE `flags` (
   KEY `fk_flags_messages` (`messages`),
   CONSTRAINT `fk_flags_messages` FOREIGN KEY (`messages`) REFERENCES `messages` (`id`),
   CONSTRAINT `fk_flags_owner` FOREIGN KEY (`owner`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `goals`
---
-
-DROP TABLE IF EXISTS `goals`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `goals` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `subject` varchar(80) NOT NULL,
-  `description` varchar(2000) DEFAULT NULL,
-  `owner` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_goals_owner` (`owner`),
-  CONSTRAINT `fk_goals_owner` FOREIGN KEY (`owner`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -259,23 +222,6 @@ CREATE TABLE `messages` (
   KEY `fk_messages_owner` (`owner`),
   CONSTRAINT `fk_messages_owner` FOREIGN KEY (`owner`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `points`
---
-
-DROP TABLE IF EXISTS `points`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `points` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `upVotes` varchar(80) NOT NULL,
-  `powerUpsCompletion` varchar(80) DEFAULT NULL,
-  `topicStarted` varchar(80) NOT NULL,
-  `commentsAdded` varchar(80) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -443,4 +389,4 @@ CREATE TABLE `usersthreads` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-20 10:17:02
+-- Dump completed on 2016-12-20 11:45:10
