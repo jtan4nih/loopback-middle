@@ -4,7 +4,7 @@
     "uiDirs": "explorer",
     "apiInfo": {
       "title": "STEM Empowerment and Common APIs",
-      "description": "Common APIs are grouped under resources prefixed by _m and _b"
+      "description": "Common APIs/Models are prefixed by _"
     }
   }
 }

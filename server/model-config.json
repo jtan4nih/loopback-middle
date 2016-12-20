@@ -68,5 +68,45 @@
   "Usersquests": {
     "dataSource": "stem2local",
     "public": true
+  },
+  "Achievements": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Audits": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Badges": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Awards": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Constructs": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Goals": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Measures": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Points": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Results": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "Subjects": {
+    "dataSource": "stem2local",
+    "public": true
   }
 }
