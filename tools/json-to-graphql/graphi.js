@@ -49,15 +49,38 @@ class Subjects {
     newSubject.description = description;
     newSubject.id = id;
 
+    // return new Promise((saveSubject, reject) => {
+    //   db.collection('subjects')
+    //     .update({id:id},{$set:{name:name,description:description}},{upsert:true}, (err, result) => {
+
+    //     if (err) return console.log(err)
+
+    //     console.log(`saved to database: ${result}`)
+    //     return saveSubject(newSubject);
+    //   });
+    // });
+
     return new Promise((saveSubject, reject) => {
-      db.collection('subjects')
-        .update({id:id},{$set:{name:name,description:description}},{upsert:true}, (err, result) => {
+    var exec = require('child_process').exec;
 
-        if (err) return console.log(err)
+console.log(`saveSubject before curl`);
+    var args = `curl -X POST --header "Content-Type: application/json" --header "Accept: application/json" -d "{
+  \"id\": 0,
+  \"owner\": \"${newSubject.owner}\",
+  \"type\": \"${newSubject.type}\",
+  \"name\": \"${newSubject.name}\"
+}" "http://localhost:3000/api/Subjects"
+    `;
 
-        console.log(`saved to database: ${result}`)
-        return saveSubject(newSubject);
-      });
+    exec('curl ' + args, function (error, stdout, stderr) {
+      console.log('stdout: ' + stdout);
+      return saveSubject(stdout);
+      console.log('stderr: ' + stderr);
+      if (error !== null) {
+        return saveSubject(error);
+      }
+    });
+console.log(`saveSubject after curl`);
     });
   }
 
