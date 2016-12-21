@@ -40,12 +40,14 @@ class Subjects {
   }
 
   saveSubject(
+    type,
     name,
     description,
     id
   ) {
     console.log(`2 saveSubject ${name}, ${description}, ${id}`);
     var newSubject = new Subjects();
+    newSubject.type = type;
     newSubject.name = name;
     newSubject.description = description;
     newSubject.id = id;
@@ -62,46 +64,42 @@ class Subjects {
     // });
 
     return new Promise((saveSubject, reject) => {
-    var exec = require('child_process').exec;
+    // "owner": "${newSubject.owner}",
+      /*
+      curl -X POST --header "Content-Type: application/json" --header "Accept: application/json" -d "{
+        "id": 0,
+        "owner": "string",
+        "type": "string",
+        "name": "string"
+      }" "http://localhost:3000/api/Subjects"
+      */
 
-  // "owner": "${newSubject.owner}",
-console.log(`saveSubject before curl`);
-/*
-curl -X POST --header "Content-Type: application/json" --header "Accept: application/json" -d "{
-  "id": 0,
-  "owner": "string",
-  "type": "string",
-  "name": "string"
-}" "http://localhost:3000/api/Subjects"
-*/
+      var data = `{
+            "id": 0,
+            "type": "${newSubject.type}",
+            "owner": "${newSubject.owner}",
+            "type": "${newSubject.type}",
+            "name": "${newSubject.name}"
+          }`;
 
-var data = `{
-      "id": 0,
-      "owner": "${newSubject.owner}",
-      "type": "${newSubject.type}",
-      "name": "${newSubject.name}"
-    }`;
-console.log(`saveSubject data "${data}"`);
-
-request({
-    url: 'http://127.0.0.1:3000/api/Subjects', //URL to hit
-    qs: {from: 'graphi.js', time: +new Date()}, //Query string data
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: data //Set the body as a string
-}, function(error, response, body){
-    if(error) {
-        console.log(error);
-        return saveSubject(error);
-    } else {
-        console.log(response.statusCode, body);
-        return saveSubject(body);
-    }
-});
-
-console.log(`saveSubject after curl`);
+      request({
+          url: 'http://127.0.0.1:3000/api/Subjects', //URL to hit
+          qs: {from: 'graphi.js', time: +new Date()}, //Query string data
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: data //Set the body as a string
+      }, function(error, response, body){
+          if(error) {
+              console.log(error);
+              return saveSubject(error);
+          } else {
+              console.log(response.statusCode, body);
+              newSubject.id = JSON.parse(body).id;
+              return saveSubject(newSubject);
+          }
+      });
     });
   }
 
@@ -111,14 +109,37 @@ console.log(`saveSubject after curl`);
     console.log(`deleteSubject ${id}`);
 
     return new Promise((deleteSubject, reject) => {
-      db.collection('subjects')
-        .remove({id:id}, (err, result) => {
+      // db.collection('subjects')
+      //   .remove({id:id}, (err, result) => {
 
-        if (err) return console.log(err)
+      //   if (err) return console.log(err)
 
-        console.log(`deleted from database: ${result}`)
-        return deleteSubject(result);
+      //   console.log(`deleted from database: ${result}`)
+      //   return deleteSubject(result);
+      // });
+
+    // "owner": "${newSubject.owner}",
+      /*
+      curl -X DELETE --header "Accept: application/json" "http://localhost:3000/api/Subjects/5"
+      */
+
+      request({
+          url: `http://127.0.0.1:3000/api/Subjects/${id}`, //URL to hit
+          qs: {from: 'graphi.js', time: +new Date()}, //Query string data
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }, function(error, response, body){
+          if(error) {
+              console.log(error);
+              return deleteSubject(error);
+          } else {
+              console.log(response.statusCode, body);
+              return deleteSubject(body);
+          }
       });
+
     });
   }
 }
@@ -157,12 +178,13 @@ var root = {
     });
   },
   saveSubject: function ({
+    type,
     name,
     description,
     id
   }) {
     console.log(`1 saveSubject ${name}, ${description}, ${id}`);
-    return new Subjects().saveSubject(name, description, id);
+    return new Subjects().saveSubject(type, name, description, id);
   },
   deleteSubject: function ({
     id

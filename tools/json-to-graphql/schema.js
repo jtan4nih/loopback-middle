@@ -12,7 +12,7 @@ var schema = buildSchema(`
   }
 
   type Mutation {
-    saveSubject(name: String!, description: String, id: String): Subjects
+    saveSubject(type: String, name: String!, description: String, id: String): Subjects
     deleteSubject(id: String!): String
   }
 
@@ -22,6 +22,7 @@ var schema = buildSchema(`
   #hello: String
 
   type Subjects {
+    type: String
     name: String
     description: String
     type: String
