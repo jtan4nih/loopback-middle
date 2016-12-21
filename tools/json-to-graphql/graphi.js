@@ -4,6 +4,7 @@ var graphqlHTTP = require('express-graphql');
 var casual = require('casual');
 // Construct a schema, using GraphQL schema language
 var schema = require('./schema.js');
+var request = require('request');
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -63,23 +64,43 @@ class Subjects {
     return new Promise((saveSubject, reject) => {
     var exec = require('child_process').exec;
 
+  // "owner": "${newSubject.owner}",
 console.log(`saveSubject before curl`);
-    var args = `curl -X POST --header "Content-Type: application/json" --header "Accept: application/json" -d "{
-  \"id\": 0,
-  \"owner\": \"${newSubject.owner}\",
-  \"type\": \"${newSubject.type}\",
-  \"name\": \"${newSubject.name}\"
+/*
+curl -X POST --header "Content-Type: application/json" --header "Accept: application/json" -d "{
+  "id": 0,
+  "owner": "string",
+  "type": "string",
+  "name": "string"
 }" "http://localhost:3000/api/Subjects"
-    `;
+*/
 
-    exec('curl ' + args, function (error, stdout, stderr) {
-      console.log('stdout: ' + stdout);
-      return saveSubject(stdout);
-      console.log('stderr: ' + stderr);
-      if (error !== null) {
+var data = `{
+      "id": 0,
+      "owner": "${newSubject.owner}",
+      "type": "${newSubject.type}",
+      "name": "${newSubject.name}"
+    }`;
+console.log(`saveSubject data "${data}"`);
+
+request({
+    url: 'http://127.0.0.1:3000/api/Subjects', //URL to hit
+    qs: {from: 'graphi.js', time: +new Date()}, //Query string data
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: data //Set the body as a string
+}, function(error, response, body){
+    if(error) {
+        console.log(error);
         return saveSubject(error);
-      }
-    });
+    } else {
+        console.log(response.statusCode, body);
+        return saveSubject(body);
+    }
+});
+
 console.log(`saveSubject after curl`);
     });
   }
