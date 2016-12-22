@@ -17,18 +17,23 @@ mutation {
 {
   subjects {
     id
-    type
-    description
   }
   constructs {
     id
+    name
     type
-    description
   }
   measures {
     id
+    name
+    text
     type
     description
+  }
+  points {
+    id
+    name
+    value
   }
 }
 

@@ -16,8 +16,10 @@ var schema = buildSchema(`
     deleteSubject(id: String!): String
     saveConstruct(type: String, name: String!, description: String, id: String): Constructs
     deleteConstruct(id: String!): String
-    saveMeasure(type: String, name: String!, description: String, id: String): Constructs
+    saveMeasure(type: String, name: String!, text: String, description: String, id: String): Constructs
     deleteMeasure(id: String!): String
+    savePoint(type: String, name: String!, value: Int, description: String, id: String): Constructs
+    deletePoint(id: String!): String
   }
 
   #getSubjects: Subjects

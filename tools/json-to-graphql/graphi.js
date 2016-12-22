@@ -5,6 +5,7 @@ var schema = require('./schema.js');  // Construct a schema, using GraphQL schem
 var Subjects = require('./models/Subjects.js');
 var Constructs = require('./models/Constructs.js');
 var Measures = require('./models/Measures.js');
+var Points = require('./models/Points.js');
 // const MongoClient = require('mongodb').MongoClient;
 
 // The root provides the top-level API endpoints
@@ -35,7 +36,16 @@ var root = {
   },
   deleteMeasure: function ({id}) {
     return new Measures().deleteMeasure(id);
-  }
+  },
+  points: function ({first,skip,id}) {
+    return new Points().listPoints(id);
+  },
+  savePoint: function ({type,name,value,description,id}) {
+    return new Points().savePoint(type, name, value, description, id);
+  },
+  deletePoint: function ({id}) {
+    return new Points().deletePoint(id);
+  },
 }
 
 var app = express();
