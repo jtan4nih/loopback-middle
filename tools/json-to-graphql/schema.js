@@ -49,6 +49,7 @@ var schema = buildSchema(`
 
   type Measures {
     name: String
+    text: String
     subject: Subjects
     description: String
     type: String

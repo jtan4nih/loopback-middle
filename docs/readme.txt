@@ -26,6 +26,17 @@ Initialization of Points:
     @message "init", "Measures"
     @message "init", "Points"
 
+e.g. STEM:
+
+@found "STEM", ->
+  @message "boot", ->
+    @message "set the name as PSS", "Constructs"
+    @message "set the type to PSS", "Measures"
+    @message "set the name as Question 1", "Measures"
+    @message "set the text as 'In the last month, how often have you been upset because of something that happened unexpectedly?'", "Measures"
+    @message "set the type to Question 1:Measures", "Points"
+    @message "set the name to Q1P1", "Points"
+
 Collection of Points:
 
 @found "Subjects", ->

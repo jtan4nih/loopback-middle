@@ -30,8 +30,8 @@ var root = {
   measures: function ({first,skip,id}) {
     return new Measures().listMeasures(id);
   },
-  saveMeasure: function ({type,name,description,id}) {
-    return new Measures().saveMeasure(type, name, description, id);
+  saveMeasure: function ({type,name,text,description,id}) {
+    return new Measures().saveMeasure(type, name, text, description, id);
   },
   deleteMeasure: function ({id}) {
     return new Measures().deleteMeasure(id);

@@ -34,6 +34,7 @@ class Measures {
   saveMeasure(
     type,
     name,
+    text,
     description,
     id
   ) {
@@ -41,6 +42,7 @@ class Measures {
     var newMeasure = new Measures();
     newMeasure.type = type;
     newMeasure.name = name;
+    newMeasure.text = text;
     newMeasure.description = description;
     newMeasure.id = id;
 
@@ -71,7 +73,8 @@ class Measures {
             "type": "${newMeasure.type}",
             "owner": "${newMeasure.owner}",
             "type": "${newMeasure.type}",
-            "name": "${newMeasure.name}"
+            "name": "${newMeasure.name}",
+            "text": "${newMeasure.text}"
           }`;
 
       request({
