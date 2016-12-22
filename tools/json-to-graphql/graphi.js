@@ -1,204 +1,41 @@
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
-// var schema1 = require('./schema.js'); //TODO cause error "Error: RootQueryType.description field type must be Output Type but got: null."
 var casual = require('casual');
-// Construct a schema, using GraphQL schema language
-var schema = require('./schema.js');
-var request = require('request');
-
-const MongoClient = require('mongodb').MongoClient;
-
-// This class implements the RandomDie GraphQL type
-class Audits {
-  constructor() {
-    this.subject = 'subject 1'
-    this.description = 'desc 1'
-    this.service = 'service 1'
-    this.extra = ''
-    this.owner = 'root'
-    this.createdat = '12-12-2016'
-    this.updatedat = '12-12-2016'
-    this.id = -1
-  }
-}
-
-class Results {
-}
-
-class Measures {
-}
-
-class Constructs {
-  constructor() {
-    this.name = 'construct 1'
-  }
-}
-
-class Subjects {
-  constructor() {
-    this.name = 'subject 1'
-  }
-
-  saveSubject(
-    type,
-    name,
-    description,
-    id
-  ) {
-    console.log(`2 saveSubject ${name}, ${description}, ${id}`);
-    var newSubject = new Subjects();
-    newSubject.type = type;
-    newSubject.name = name;
-    newSubject.description = description;
-    newSubject.id = id;
-
-    // return new Promise((saveSubject, reject) => {
-    //   db.collection('subjects')
-    //     .update({id:id},{$set:{name:name,description:description}},{upsert:true}, (err, result) => {
-
-    //     if (err) return console.log(err)
-
-    //     console.log(`saved to database: ${result}`)
-    //     return saveSubject(newSubject);
-    //   });
-    // });
-
-    return new Promise((saveSubject, reject) => {
-    // "owner": "${newSubject.owner}",
-      /*
-      curl -X POST --header "Content-Type: application/json" --header "Accept: application/json" -d "{
-        "id": 0,
-        "owner": "string",
-        "type": "string",
-        "name": "string"
-      }" "http://localhost:3000/api/Subjects"
-      */
-
-      var data = `{
-            "id": 0,
-            "type": "${newSubject.type}",
-            "owner": "${newSubject.owner}",
-            "type": "${newSubject.type}",
-            "name": "${newSubject.name}"
-          }`;
-
-      request({
-          url: 'http://127.0.0.1:3000/api/Subjects', //URL to hit
-          qs: {from: 'graphi.js', time: +new Date()}, //Query string data
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: data //Set the body as a string
-      }, function(error, response, body){
-          if(error) {
-              console.log(error);
-              return saveSubject(error);
-          } else {
-              console.log(response.statusCode, body);
-              newSubject.id = JSON.parse(body).id;
-              return saveSubject(newSubject);
-          }
-      });
-    });
-  }
-
-  deleteSubject(
-    id
-  ) {
-    console.log(`deleteSubject ${id}`);
-
-    return new Promise((deleteSubject, reject) => {
-      // db.collection('subjects')
-      //   .remove({id:id}, (err, result) => {
-
-      //   if (err) return console.log(err)
-
-      //   console.log(`deleted from database: ${result}`)
-      //   return deleteSubject(result);
-      // });
-
-    // "owner": "${newSubject.owner}",
-      /*
-      curl -X DELETE --header "Accept: application/json" "http://localhost:3000/api/Subjects/5"
-      */
-
-      request({
-          url: `http://127.0.0.1:3000/api/Subjects/${id}`, //URL to hit
-          qs: {from: 'graphi.js', time: +new Date()}, //Query string data
-          method: 'DELETE',
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      }, function(error, response, body){
-          if(error) {
-              console.log(error);
-              return deleteSubject(error);
-          } else {
-              console.log(response.statusCode, body);
-              return deleteSubject(body);
-          }
-      });
-
-    });
-  }
-}
-
-// class RandomDie {
-//   constructor(numSides) {
-//     this.numSides = numSides;
-//   }
-
-//   rollOnce() {
-//     return 1 + Math.floor(Math.random() * this.numSides);
-//   }
-
-//   roll({numRolls}) {
-//     var output = [];
-//     for (var i = 0; i < numRolls; i++) {
-//       output.push(this.rollOnce());
-//     }
-//     return output;
-//   }
-// }
+var schema = require('./schema.js');  // Construct a schema, using GraphQL schema language
+var Subjects = require('./models/Subjects.js');
+var Constructs = require('./models/Constructs.js');
+var Measures = require('./models/Measures.js');
+// const MongoClient = require('mongodb').MongoClient;
 
 // The root provides the top-level API endpoints
 var root = {
-  subjects: function ({first, skip}) {
-    return new Promise((subjects, reject) => {
-      if(!first) first = 0;
-      if(!skip) skip = 0;
-      db.collection('subjects')
-        .find({})
-        .skip(skip).limit(first)
-        .toArray((err, result) => {
-          if (err) return reject(err);
-          return subjects(result);
-      });
-    });
+  subjects: function ({first,skip,id}) {
+    return new Subjects().listSubjects(id);
   },
-  saveSubject: function ({
-    type,
-    name,
-    description,
-    id
-  }) {
-    console.log(`1 saveSubject ${name}, ${description}, ${id}`);
+  saveSubject: function ({type,name,description,id}) {
     return new Subjects().saveSubject(type, name, description, id);
   },
-  deleteSubject: function ({
-    id
-  }) {
-    console.log(`deleteSubject ${id}`);
+  deleteSubject: function ({id}) {
     return new Subjects().deleteSubject(id);
+  },
+  constructs: function ({first,skip,id}) {
+    return new Constructs().listConstructs(id);
+  },
+  saveConstruct: function ({type,name,description,id}) {
+    return new Constructs().saveConstruct(type, name, description, id);
+  },
+  deleteConstruct: function ({id}) {
+    return new Constructs().deleteConstruct(id);
+  },
+  measures: function ({first,skip,id}) {
+    return new Measures().listMeasures(id);
+  },
+  saveMeasure: function ({type,name,description,id}) {
+    return new Measures().saveMeasure(type, name, description, id);
+  },
+  deleteMeasure: function ({id}) {
+    return new Measures().deleteMeasure(id);
   }
-  // ,
-  // getDie: function ({numSides}) {
-  //   return new RandomDie(numSides || 6);
-  // },
-  // hello: function () { 
-  //   return "world"
-  // }
 }
 
 var app = express();
@@ -208,15 +45,15 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
-var db;
-var dbUser = 'bn_df';
-var dbPassword = 'a7264c4821';
-var mongodbUrl = `mongodb://${dbUser}:${dbPassword}@127.0.0.1:27017/bitnami_df`;
+// var db;
+// var dbUser = 'bn_df';
+// var dbPassword = 'a7264c4821';
+// var mongodbUrl = `mongodb://${dbUser}:${dbPassword}@127.0.0.1:27017/bitnami_df`;
 
-MongoClient.connect(mongodbUrl, (err, database) => {
-  if (err) return console.log(err)
-  db = database
+// MongoClient.connect(mongodbUrl, (err, database) => {
+//   if (err) return console.log(err)
+//   db = database
   app.listen(4000, () => {
     console.log('Running a GraphQL API server at localhost:4000/graphql');
   })
-})
+// })

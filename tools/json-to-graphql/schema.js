@@ -3,17 +3,21 @@ var { buildSchema } = require('graphql');
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
-    subjects(first: Int, skip: Int): [Subjects]
-    constructs: [Constructs]
-    measures: [Measures]
-    points: [Points]
-    results: [Results]
-    badges: [Badges]
+    subjects(first: Int, skip: Int, id: String): [Subjects]
+    constructs(first: Int, skip: Int, id: String): [Constructs]
+    measures(first: Int, skip: Int, id: String): [Measures]
+    points(first: Int, skip: Int, id: String): [Points]
+    results(first: Int, skip: Int, id: String): [Results]
+    badges(first: Int, skip: Int, id: String): [Badges]
   }
 
   type Mutation {
     saveSubject(type: String, name: String!, description: String, id: String): Subjects
     deleteSubject(id: String!): String
+    saveConstruct(type: String, name: String!, description: String, id: String): Constructs
+    deleteConstruct(id: String!): String
+    saveMeasure(type: String, name: String!, description: String, id: String): Constructs
+    deleteMeasure(id: String!): String
   }
 
   #getSubjects: Subjects
@@ -132,6 +136,5 @@ var schema = buildSchema(`
   # roll(numRolls: Int!): [Int]
   #}
 `);
-
 
 module.exports = schema;

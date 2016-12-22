@@ -3,13 +3,39 @@ All the json files generated here were generated manually by hitting the Swagger
 Sample mutations:
 
 mutation {
-  saveSubject(name:"n1", type:"participant", description:"d1") {
+  saveSubject(name:"n1", type:"participant", description:"sub") {
     id
+  }
+  saveConstruct(name:"c1", type:"powerups", description:"pu") {
+    id
+  }
+  saveMeasure(name:"m1", type:"mood scale", description:"m") {
+    id
+  }
+}
+
+{
+  subjects {
+    id
+    type
+    description
+  }
+  constructs {
+    id
+    type
+    description
+  }
+  measures {
+    id
+    type
+    description
   }
 }
 
 mutation {
   deleteSubject(id:"1")
+  deleteConstruct(id:"1")
+  deleteMeasure(id:"1")
 }
 
 References:
