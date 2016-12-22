@@ -8,7 +8,9 @@ class Points {
   }
 
   listPoints(
-    id
+    id,
+    type,
+    name
   ) {
     console.log(`1 listPoints ${id}`);
     return new Promise((listPoints, reject) => {
@@ -25,7 +27,7 @@ class Points {
       /*
       curl -X GET --header "Accept: application/json" "http://localhost:3000/api/Points"
       */
-      util.listModels(this.apiHost, '/api/Points', id, listPoints);
+      util.listModels(this.apiHost, '/api/Points', id, type, name, listPoints);
 
       console.log(`2 listPoints`);
     });

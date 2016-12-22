@@ -10,8 +10,8 @@ var Points = require('./models/Points.js');
 
 // The root provides the top-level API endpoints
 var root = {
-  subjects: function ({first,skip,id}) {
-    return new Subjects().listSubjects(id);
+  subjects: function ({first,skip,id,type,name}) {
+    return new Subjects().listSubjects(id,type,name);
   },
   saveSubject: function ({type,name,description,id}) {
     return new Subjects().saveSubject(type, name, description, id);
@@ -19,8 +19,8 @@ var root = {
   deleteSubject: function ({id}) {
     return new Subjects().deleteSubject(id);
   },
-  constructs: function ({first,skip,id}) {
-    return new Constructs().listConstructs(id);
+  constructs: function ({first,skip,id,type,name}) {
+    return new Constructs().listConstructs(id,type,name);
   },
   saveConstruct: function ({type,name,description,id}) {
     return new Constructs().saveConstruct(type, name, description, id);
@@ -28,8 +28,8 @@ var root = {
   deleteConstruct: function ({id}) {
     return new Constructs().deleteConstruct(id);
   },
-  measures: function ({first,skip,id}) {
-    return new Measures().listMeasures(id);
+  measures: function ({first,skip,id,type,name}) {
+    return new Measures().listMeasures(id,type,name);
   },
   saveMeasure: function ({type,name,text,description,id}) {
     return new Measures().saveMeasure(type, name, text, description, id);
@@ -37,8 +37,8 @@ var root = {
   deleteMeasure: function ({id}) {
     return new Measures().deleteMeasure(id);
   },
-  points: function ({first,skip,id}) {
-    return new Points().listPoints(id);
+  points: function ({first,skip,id,type,name}) {
+    return new Points().listPoints(id,type,name);
   },
   savePoint: function ({type,name,value,description,id}) {
     return new Points().savePoint(type, name, value, description, id);

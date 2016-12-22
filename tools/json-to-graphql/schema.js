@@ -3,12 +3,12 @@ var { buildSchema } = require('graphql');
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
-    subjects(first: Int, skip: Int, id: String): [Subjects]
-    constructs(first: Int, skip: Int, id: String): [Constructs]
-    measures(first: Int, skip: Int, id: String): [Measures]
-    points(first: Int, skip: Int, id: String): [Points]
-    results(first: Int, skip: Int, id: String): [Results]
-    badges(first: Int, skip: Int, id: String): [Badges]
+    subjects(first: Int, skip: Int, id: String, name: String, type: String): [Subjects]
+    constructs(first: Int, skip: Int, id: String, name: String, type: String): [Constructs]
+    measures(first: Int, skip: Int, id: String, name: String, type: String): [Measures]
+    points(first: Int, skip: Int, id: String, name: String, type: String): [Points]
+    results(first: Int, skip: Int, id: String, name: String, type: String): [Results]
+    badges(first: Int, skip: Int, id: String, name: String, type: String): [Badges]
   }
 
   type Mutation {

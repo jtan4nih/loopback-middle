@@ -8,7 +8,9 @@ class Measures {
   }
 
   listMeasures(
-    id
+    id,
+    type,
+    name
   ) {
     console.log(`1 listMeasures ${id}`);
     return new Promise((listMeasures, reject) => {
@@ -25,7 +27,7 @@ class Measures {
       /*
       curl -X GET --header "Accept: application/json" "http://localhost:3000/api/Measures"
       */
-      util.listModels(this.apiHost, '/api/Measures', id, listMeasures);
+      util.listModels(this.apiHost, '/api/Measures', id, type, name, listMeasures);
 
       console.log(`2 listMeasures`);
     });

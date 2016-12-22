@@ -24,6 +24,13 @@
           "type": "string",
           "size": 80,
           "allow_null": false
+        },
+        {
+          "name": "text",
+          "label": "Text",
+          "type": "string",
+          "size": 1000,
+          "allow_null": false
         }
       ]
     }

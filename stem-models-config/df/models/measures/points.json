@@ -26,6 +26,13 @@
           "allow_null": false
         },
         {
+          "name": "name",
+          "label": "Name",
+          "type": "string",
+          "size": 80,
+          "allow_null": false
+        },
+        {
           "name": "value",
           "label": "Value",
           "type": "integer",

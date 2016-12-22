@@ -15,6 +15,31 @@ mutation {
 }
 
 {
+  subjects(name:"jd") {
+    id
+    name
+  }
+  constructs(type:"STEM",name:"PSS") {
+    id
+    name
+    type
+  }
+  measures(type:"PSS", name:"Question 1") {
+    id
+    name
+    type
+    text
+    description
+  }
+  points(type:"Question 1:Measures") {
+    id
+    name
+    type
+    value
+  }
+}
+
+{
   subjects {
     id
   }
