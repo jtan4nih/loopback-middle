@@ -5,12 +5,24 @@ Sample mutations:
 mutation {
   saveSubject(name:"n1", type:"participant", description:"sub") {
     id
+    name
+    type
   }
   saveConstruct(name:"c1", type:"powerups", description:"pu") {
     id
+    type
+    name
   }
-  saveMeasure(name:"m1", type:"mood scale", description:"m") {
+  saveMeasure(name:"mood", type:"c1", description:"m") {
     id
+    name
+    type
+  }
+  savePoint(type: "mood", name: "p1", value: 10, description: "p1") {
+  	id
+    type
+    name
+    value
   }
 }
 
