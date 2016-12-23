@@ -4,7 +4,7 @@ var util = require('../graphicommon.js');
 class Subjects {
   constructor() {
     this.apiHost = "http://127.0.0.1:3000";
-    this.name = 'subject 1'
+    this.name = '_Subjects'
   }
 
   listSubjects(
@@ -27,7 +27,7 @@ class Subjects {
       /*
       curl -X GET --header "Accept: application/json" "http://localhost:3000/api/Subjects"
       */
-      util.listModels(this.apiHost, '/api/Subjects', id, type, name, listSubjects);
+      util.listModels(this.apiHost, `/api/${this.name}`, id, type, name, listSubjects);
 
       console.log(`2 listSubjects`);
     });
@@ -77,7 +77,7 @@ class Subjects {
           }`;
 
       request({
-          url: `${this.apiHost}/api/Subjects`, //URL to hit
+          url: `${this.apiHost}/api/${this.name}`, //URL to hit
           qs: {from: 'graphi.js', time: +new Date()}, //Query string data
           method: 'POST',
           headers: {
@@ -118,7 +118,7 @@ class Subjects {
       */
 
       request({
-          url: `${this.apiHost}/api/Subjects/${id}`, //URL to hit
+          url: `${this.apiHost}/api/${this.name}/${id}`, //URL to hit
           qs: {from: 'graphi.js', time: +new Date()}, //Query string data
           method: 'DELETE',
           headers: {

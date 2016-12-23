@@ -45,12 +45,33 @@ Collection of Points:
         @message "iterate", "Measures"
         @message "accumulate", "Points"
 
+e.g. STEM:
+
+@found "Sensor", ->
+    @message "push movement data", "STEM", ->
+        @message "query for movement construct", "Constructs"
+        @message "update the related measure", "Measures"
+        @message "accumulate the related point", "Points"
+        @message "assign construct to the participant", "Subject"
+        @message "calculate total", ->
+           @message "save", "Results"
+        @message "assign result to the participant", "Subject"
+
 Rewarding the Points:
 
 @found "Results", ->
     @message "query", "Goals", ->
         @message "query", "Awards"
         @message "invoke", "Badge"
+
+e.g. STEM:
+
+@found "STEM", ->
+    @message "query (against any matching goal)", "Results", ->
+    @message "query", "Goals", ->
+        @message "get award(s), if any", "Awards"
+    @message "assign/update award(s)", "Results"
+    @message "retrieve an asset, if any", "Badge"
 
 Meeting the Goals:
 

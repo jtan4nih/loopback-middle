@@ -1,5 +1,5 @@
 {
-  "name": "Badges",
+  "name": "_Badges",
   "base": "PersistedModel",
   "idInjection": false,
   "options": {

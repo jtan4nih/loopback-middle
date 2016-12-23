@@ -1,5 +1,5 @@
 {
-  "name": "Measures",
+  "name": "_Measures",
   "base": "PersistedModel",
   "idInjection": false,
   "options": {

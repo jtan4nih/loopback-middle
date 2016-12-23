@@ -1,13 +1,13 @@
 module.exports = function(app) {
   app.dataSources.stem2local.automigrate([
     //'QuestsPowerups',
-    'Constructs'], function(err) {
+    '_Constructs'], function(err) {
 // return
     if (err) throw err;
  
-      console.log('Updating Constructs models ... \n');
+      console.log('Updating _Constructs models ... \n');
 
-      app.models.Constructs.create([
+      app.models._Constructs.create([
         {
           "id": 1,"name": "PSS",
           "type": "STEM",
@@ -15,7 +15,7 @@ module.exports = function(app) {
         }
       ], function(err, powerups) {
         if (err) {
-          console.log('Constructs models unchanged. \n', powerups);
+          console.log('_Constructs models unchanged. \n', powerups);
           throw err;
         } else {
           // console.log('Powerups models created: \n', powerups);

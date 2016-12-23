@@ -1,12 +1,12 @@
 module.exports = function(app) {
   app.dataSources.stem2local.automigrate([
-    'Measures'], function(err) {
+    '_Measures'], function(err) {
 // return
     if (err) throw err;
  
-      console.log('Updating Measures models ... \n');
+      console.log('Updating _Measures models ... \n');
 
-      app.models.Measures.create([
+      app.models._Measures.create([
         {
           "id": 1,"name": "Question 1",
           "type": "PSS",
@@ -33,7 +33,7 @@ module.exports = function(app) {
         }
       ], function(err, powerups) {
         if (err) {
-          console.log('Measures models unchanged. \n', powerups);
+          console.log('_Measures models unchanged. \n', powerups);
           throw err;
         } else {
           // console.log('Powerups models created: \n', powerups);

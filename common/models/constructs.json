@@ -1,5 +1,5 @@
 {
-  "name": "Constructs",
+  "name": "_Constructs",
   "base": "PersistedModel",
   "idInjection": false,
   "options": {

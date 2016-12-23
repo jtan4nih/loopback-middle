@@ -1,5 +1,5 @@
 {
-  "name": "Subjects",
+  "name": "_Subjects",
   "base": "PersistedModel",
   "idInjection": false,
   "options": {

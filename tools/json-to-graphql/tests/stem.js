@@ -23,9 +23,14 @@ mutation {
   }
 }
 `).then(function (response) {
-    assert(response.success == true);
-    assert(response.status == 200);
-    console.log(`passed ${++count}`);
+    try {
+      assert(response.success == true);
+      assert(response.status == 200);
+      console.log(`passed ${++count}`);
+    } catch(e) {
+      console.log(`failed ${++count}`);
+    }
+
     console.log(response.data.saveSubject.id);
     console.log(response.data.saveConstruct.id);
     console.log(response.data.saveMeasure.id);
@@ -52,13 +57,17 @@ mutation {
       }
     }
     `).then(function (response) {
-        assert(response.success == true);
-        assert(response.status == 200);
-        console.log(`passed ${++count}`);
-        // console.log(response.data.subjects[0].id);
-        assert(response.data.subjects[0].id === subid);
-        assert(response.data.constructs[0].id === conid);
-        assert(response.data.measures[0].id === meaid);
+        try {
+          assert(response.success == true);
+          assert(response.status == 200);
+          // console.log(response.data.subjects[0].id);
+          assert(response.data.subjects[0].id === subid);
+          assert(response.data.constructs[0].id === conid);
+          assert(response.data.measures[0].id === meaid);
+          console.log(`passed ${++count}`);
+        } catch(e) {
+          console.log(`failed ${++count}`);
+        }
 
         // This tests a successful delete requests
         test(`
@@ -68,12 +77,16 @@ mutation {
           deleteMeasure(id:"${meaid}")
         }
         `).then(function (response) {
-            assert(response.success == true);
-            assert(response.status == 200);
-            assert(JSON.parse(response.data.deleteSubject).count === 1);
-            assert(JSON.parse(response.data.deleteConstruct).count === 1);
-            assert(JSON.parse(response.data.deleteMeasure).count === 1);
-            console.log(`passed ${++count}`);
+            try {
+              assert(response.success == true);
+              assert(response.status == 200);
+              assert(JSON.parse(response.data.deleteSubject).count === 1);
+              assert(JSON.parse(response.data.deleteConstruct).count === 1);
+              assert(JSON.parse(response.data.deleteMeasure).count === 1);
+              console.log(`passed ${++count}`);
+            } catch(e) {
+              console.log(`failed ${++count}`);
+            }
             // console.log(JSON.parse(response.data.deleteSubject).count);
         });
     });

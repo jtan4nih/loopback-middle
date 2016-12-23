@@ -69,43 +69,43 @@
     "dataSource": "stem2local",
     "public": true
   },
-  "Achievements": {
-    "dataSource": "stem2local",
-    "public": true
-  },
   "Audits": {
     "dataSource": "stem2local",
     "public": true
   },
-  "Badges": {
+  "_Achievements": {
     "dataSource": "stem2local",
     "public": true
   },
-  "Awards": {
+  "_Badges": {
     "dataSource": "stem2local",
     "public": true
   },
-  "Constructs": {
+  "_Awards": {
     "dataSource": "stem2local",
     "public": true
   },
-  "Goals": {
+  "_Constructs": {
     "dataSource": "stem2local",
     "public": true
   },
-  "Measures": {
+  "_Goals": {
     "dataSource": "stem2local",
     "public": true
   },
-  "Points": {
+  "_Measures": {
     "dataSource": "stem2local",
     "public": true
   },
-  "Results": {
+  "_Points": {
     "dataSource": "stem2local",
     "public": true
   },
-  "Subjects": {
+  "_Results": {
+    "dataSource": "stem2local",
+    "public": true
+  },
+  "_Subjects": {
     "dataSource": "stem2local",
     "public": true
   }

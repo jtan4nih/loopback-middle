@@ -1,5 +1,5 @@
 {
-  "name": "Achievements",
+  "name": "_Achievements",
   "base": "PersistedModel",
   "idInjection": false,
   "options": {

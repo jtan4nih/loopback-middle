@@ -1,5 +1,5 @@
 {
-  "name": "Points",
+  "name": "_Points",
   "base": "PersistedModel",
   "idInjection": false,
   "options": {

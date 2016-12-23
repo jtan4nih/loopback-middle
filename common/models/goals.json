@@ -1,5 +1,5 @@
 {
-  "name": "Goals",
+  "name": "_Goals",
   "base": "PersistedModel",
   "idInjection": false,
   "options": {
